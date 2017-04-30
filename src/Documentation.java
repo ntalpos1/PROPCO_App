@@ -1,6 +1,7 @@
 
 import java.awt.Desktop;
 import java.io.File;
+import java.util.regex.Matcher;
 import javax.swing.JOptionPane;
 
 /*
@@ -81,7 +82,9 @@ public class Documentation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTreeDocumentationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeDocumentationMouseClicked
-        jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replaceAll("[\\[\\]]","").replaceAll(", ", "\\");
+        //jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replaceAll("[\\[\\]]","").replaceAll(", ", "\\");
+        jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replace("\\","\\\\").replace(", ", "/").replace("[","").replace("]","");
+        //jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replaceAll("\\", Matcher.quoteReplacement("\\\\"));
         System.out.println("treeholder" + jTreeHolder);
     }//GEN-LAST:event_jTreeDocumentationMouseClicked
 

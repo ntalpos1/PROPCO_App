@@ -507,8 +507,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBillingExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -522,8 +521,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addComponent(txtBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnDocumentation)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btnDocumentation)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pnlBillingCustomerLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblBillingAlias, lblBillingCity, lblBillingContact, lblBillingName, lblBillingPhone1, lblBillingPhone2, lblBillingStreet});
@@ -1299,8 +1298,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
