@@ -1387,7 +1387,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         MainMenu regFace = new MainMenu();
-	regFace.setSize(1500,1000);
+	regFace.setSize(700,800);
 	regFace.setLocationRelativeTo(null);
 	regFace.setResizable(false);
 	dispose();
@@ -1791,7 +1791,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
     private void btnDocumentationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentationActionPerformed
         Documentation frmDocumentation = new Documentation();
-        frmDocumentation.setSize(1200,840);
+        frmDocumentation.setSize(380,380);
         frmDocumentation.setLocationRelativeTo(null);
         frmDocumentation.setResizable(false);
         dispose();

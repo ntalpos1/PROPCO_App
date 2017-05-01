@@ -36,10 +36,22 @@ public class Documentation extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTreeDocumentation = new javax.swing.JTree();
         btnOpen = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(380, 380));
+        setMinimumSize(new java.awt.Dimension(380, 380));
+        setPreferredSize(new java.awt.Dimension(380, 380));
+
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(380, 750));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(380, 750));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 750));
 
         jTreeDocumentation.setModel(new FileSystemModel(new File("/home/dan")));
+        jTreeDocumentation.setMaximumSize(new java.awt.Dimension(800, 600));
+        jTreeDocumentation.setMinimumSize(new java.awt.Dimension(800, 600));
+        jTreeDocumentation.setPreferredSize(new java.awt.Dimension(800, 600));
         jTreeDocumentation.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTreeDocumentationMouseClicked(evt);
@@ -54,28 +66,40 @@ public class Documentation extends javax.swing.JFrame {
             }
         });
 
+        btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(btnOpen)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnOpen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClose)
+                        .addGap(70, 70, 70))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOpen)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClose)
+                    .addComponent(btnOpen))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,7 +107,7 @@ public class Documentation extends javax.swing.JFrame {
 
     private void jTreeDocumentationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeDocumentationMouseClicked
         //jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replaceAll("[\\[\\]]","").replaceAll(", ", "\\");
-        jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replace("\\","\\\\").replace(", ", "/").replace("[","").replace("]","");
+        jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replace("\\","\\\\").replace(", ", "/").replace("[","").replace("]","").replace("/","//" );
         //jTreeHolder = jTreeDocumentation.getSelectionPath().toString().replaceAll("\\", Matcher.quoteReplacement("\\\\"));
         System.out.println("treeholder" + jTreeHolder);
     }//GEN-LAST:event_jTreeDocumentationMouseClicked
@@ -96,7 +120,7 @@ public class Documentation extends javax.swing.JFrame {
                     Desktop.getDesktop().open(Selection);
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "The is Desktop is not Supported", "Error",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "This Desktop is not Supported", "Error",JOptionPane.INFORMATION_MESSAGE);
                 }
             } 
             else{
@@ -107,6 +131,15 @@ public class Documentation extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        MainMenu regFace = new MainMenu();
+	regFace.setSize(700,800);
+	regFace.setLocationRelativeTo(null);
+	regFace.setResizable(false);
+	dispose();
+	regFace.setVisible(true);
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,6 +177,7 @@ public class Documentation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClose;
     private javax.swing.JButton btnOpen;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTreeDocumentation;
