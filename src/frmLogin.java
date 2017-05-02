@@ -51,6 +51,7 @@ public class frmLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login Authentication");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("frmLogin"); // NOI18N
         setResizable(false);
 

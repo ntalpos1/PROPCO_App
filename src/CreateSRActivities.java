@@ -303,7 +303,7 @@ public class CreateSRActivities extends JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {
         System.out.println("btnCancelActionPerformed");
         MainMenu regFace = new MainMenu();
-	regFace.setSize(1500,1000);
+	regFace.setSize(700,800);
 	regFace.setLocationRelativeTo(null);
 	regFace.setResizable(false);
 	dispose();

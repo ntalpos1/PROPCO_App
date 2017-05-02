@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -48,6 +49,11 @@ public class ServiceReceipt extends javax.swing.JFrame {
         CustDlg my_dlg = new CustDlg();
         my_dlg.init();
         my_dlg.dispose();
+        if (CustomerType == "Existing"){
+        }
+        else{
+            disable_form();
+        }
         //establishConnection();
         System.out.println("this is a " + this.CustomerType + " customer!");
     }
@@ -165,7 +171,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setFocusable(false);
         setMaximumSize(new java.awt.Dimension(1100, 772));
         setMinimumSize(new java.awt.Dimension(1100, 772));
         setName("frmServiceReceipt"); // NOI18N
@@ -313,52 +318,123 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingName.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingName.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingName.setNextFocusableComponent(txtBillingAlias);
         txtBillingName.setPreferredSize(new java.awt.Dimension(68, 17));
+        txtBillingName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBillingNameFocusLost(evt);
+            }
+        });
+        txtBillingName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBillingNameKeyPressed(evt);
+            }
+        });
 
         txtBillingContact.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBillingContact.setNextFocusableComponent(txtBillingPhone1);
 
         txtBillingPhone1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingPhone1.setText("xxx-xxx-xxxx");
         txtBillingPhone1.setToolTipText("");
+        txtBillingPhone1.setNextFocusableComponent(txtBillingExt1);
+        txtBillingPhone1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBillingPhone1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBillingPhone1FocusLost(evt);
+            }
+        });
+        txtBillingPhone1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBillingPhone1KeyPressed(evt);
+            }
+        });
 
         txtBillingPhone2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingPhone2.setText("xxx-xxx-xxxx");
         txtBillingPhone2.setToolTipText("");
+        txtBillingPhone2.setNextFocusableComponent(txtBillingExt2);
+        txtBillingPhone2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBillingPhone2FocusGained(evt);
+            }
+        });
 
         txtBillingExt1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBillingExt1.setNextFocusableComponent(txtBillingPhone2);
 
         txtBillingExt2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBillingExt2.setNextFocusableComponent(txtBillingFax);
 
         txtBillingProv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingProv.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingProv.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingProv.setNextFocusableComponent(txtBillingPostalCode);
         txtBillingProv.setPreferredSize(new java.awt.Dimension(68, 17));
 
         txtBillingFax.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingFax.setText("xxx-xxx-xxxx");
         txtBillingFax.setToolTipText("");
+        txtBillingFax.setNextFocusableComponent(txtBillingEmail);
+        txtBillingFax.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBillingFaxFocusGained(evt);
+            }
+        });
 
         txtBillingEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBillingEmail.setNextFocusableComponent(txtBillingDept);
 
         txtBillingCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingCity.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingCity.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingCity.setNextFocusableComponent(txtBillingProv);
         txtBillingCity.setPreferredSize(new java.awt.Dimension(68, 17));
+        txtBillingCity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBillingCityFocusLost(evt);
+            }
+        });
+        txtBillingCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBillingCityKeyPressed(evt);
+            }
+        });
 
         txtBillingPostalCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingPostalCode.setText("A1A 1A1");
         txtBillingPostalCode.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingPostalCode.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingPostalCode.setNextFocusableComponent(txtBillingContact);
         txtBillingPostalCode.setPreferredSize(new java.awt.Dimension(68, 17));
+        txtBillingPostalCode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBillingPostalCodeFocusGained(evt);
+            }
+        });
 
         txtBillingStreet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingStreet.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingStreet.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingStreet.setNextFocusableComponent(txtBillingCity);
         txtBillingStreet.setPreferredSize(new java.awt.Dimension(68, 17));
+        txtBillingStreet.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBillingStreetFocusLost(evt);
+            }
+        });
+        txtBillingStreet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBillingStreetKeyPressed(evt);
+            }
+        });
 
         txtBillingAlias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingAlias.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingAlias.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingAlias.setNextFocusableComponent(txtBillingStreet);
         txtBillingAlias.setPreferredSize(new java.awt.Dimension(68, 17));
 
         lblBillingDept.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -380,14 +456,17 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingDept.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingDept.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingDept.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingDept.setNextFocusableComponent(txtBillingContract);
         txtBillingDept.setPreferredSize(new java.awt.Dimension(68, 17));
 
         txtBillingContract.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingContract.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingContract.setMinimumSize(new java.awt.Dimension(68, 17));
+        txtBillingContract.setNextFocusableComponent(btnDocumentation);
         txtBillingContract.setPreferredSize(new java.awt.Dimension(68, 17));
 
         btnDocumentation.setText("Documentation");
+        btnDocumentation.setNextFocusableComponent(txtPO);
         btnDocumentation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDocumentationActionPerformed(evt);
@@ -658,6 +737,13 @@ public class ServiceReceipt extends javax.swing.JFrame {
         lblUnit.setVerifyInputWhenFocusTarget(false);
 
         txtCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCustomer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCustomer.setNextFocusableComponent(txtCustInfo);
+        txtCustomer.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCustomerFocusLost(evt);
+            }
+        });
         txtCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCustomerKeyPressed(evt);
@@ -665,33 +751,87 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         txtContact.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtContact.setNextFocusableComponent(txtPhone1);
 
         txtPhone1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPhone1.setText("xxx-xxx-xxxx");
         txtPhone1.setToolTipText("");
+        txtPhone1.setNextFocusableComponent(txtExt1);
+        txtPhone1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPhone1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPhone1FocusLost(evt);
+            }
+        });
+        txtPhone1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPhone1KeyPressed(evt);
+            }
+        });
 
         txtPhone2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPhone2.setText("xxx-xxx-xxxx");
         txtPhone2.setToolTipText("");
+        txtPhone2.setNextFocusableComponent(txtExt2);
+        txtPhone2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPhone2FocusGained(evt);
+            }
+        });
 
         txtExt1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtExt1.setNextFocusableComponent(txtPhone2);
 
         txtExt2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtExt2.setNextFocusableComponent(txtFax);
 
         txtProv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtProv.setNextFocusableComponent(txtPostalCode);
 
         txtFax.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtFax.setText("xxx-xxx-xxxx");
         txtFax.setToolTipText("");
+        txtFax.setNextFocusableComponent(txtEmail);
+        txtFax.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFaxFocusGained(evt);
+            }
+        });
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setNextFocusableComponent(txtBillingName);
 
         txtCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCity.setNextFocusableComponent(txtProv);
+        txtCity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCityFocusLost(evt);
+            }
+        });
+        txtCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCityKeyPressed(evt);
+            }
+        });
 
         txtPostalCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPostalCode.setText("A1A 1A1");
+        txtPostalCode.setNextFocusableComponent(txtContact);
+        txtPostalCode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPostalCodeFocusGained(evt);
+            }
+        });
 
         txtStreet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtStreet.setNextFocusableComponent(txtUnit);
+        txtStreet.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtStreetFocusLost(evt);
+            }
+        });
         txtStreet.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtStreetKeyPressed(evt);
@@ -699,10 +839,13 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         txtStreetInfo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtStreetInfo.setNextFocusableComponent(txtCity);
 
         txtCustInfo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCustInfo.setNextFocusableComponent(txtStreet);
 
         txtUnit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtUnit.setNextFocusableComponent(txtStreetInfo);
 
         lblBundled.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblBundled.setText("Bundled:");
@@ -911,12 +1054,14 @@ public class ServiceReceipt extends javax.swing.JFrame {
         lblPO.setVerifyInputWhenFocusTarget(false);
 
         txtPO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPO.setNextFocusableComponent(btngrpPerService);
 
         pnlFreq.setBorder(javax.swing.BorderFactory.createTitledBorder("Invoice Frequency:"));
         pnlFreq.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         btngrpPerService.setSelected(true);
         btngrpPerService.setText("Per Service Request");
+        btngrpPerService.setNextFocusableComponent(btngrpMonthly);
         btngrpPerService.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btngrpPerServiceMousePressed(evt);
@@ -924,6 +1069,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         btngrpMonthly.setText("Net 30");
+        btngrpMonthly.setNextFocusableComponent(rbCheck);
         btngrpMonthly.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btngrpMonthlyMousePressed(evt);
@@ -980,6 +1126,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
         rbCheck.setSelected(true);
         rbCheck.setText("Check");
+        rbCheck.setNextFocusableComponent(rbMastercard);
         rbCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbCheckActionPerformed(evt);
@@ -987,6 +1134,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbVisa.setText("VISA");
+        rbVisa.setNextFocusableComponent(rbPcard);
         rbVisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbVisaActionPerformed(evt);
@@ -994,6 +1142,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbMastercard.setText("Mastercard");
+        rbMastercard.setNextFocusableComponent(rbOthers);
         rbMastercard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbMastercardActionPerformed(evt);
@@ -1002,6 +1151,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
         rbPcard.setText("P-card");
         rbPcard.setActionCommand("Pcard");
+        rbPcard.setNextFocusableComponent(rbInSuit);
         rbPcard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbPcardActionPerformed(evt);
@@ -1009,6 +1159,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbOthers.setText("Others");
+        rbOthers.setNextFocusableComponent(rbVisa);
         rbOthers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbOthersActionPerformed(evt);
@@ -1049,6 +1200,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlService.setPreferredSize(new java.awt.Dimension(1112, 59));
 
         rbEmergency.setText("Emergency Service");
+        rbEmergency.setNextFocusableComponent(rbBlock);
         rbEmergency.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbEmergencyActionPerformed(evt);
@@ -1056,6 +1208,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbBlock.setText("Block Treatment/Total Building Treatment");
+        rbBlock.setNextFocusableComponent(rbRegular);
         rbBlock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbBlockActionPerformed(evt);
@@ -1063,13 +1216,16 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbRegular.setLabel("Regular Service - Common Area");
+        rbRegular.setNextFocusableComponent(rbNew);
         rbRegular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbRegularActionPerformed(evt);
             }
         });
 
+        rbNew.setFocusTraversalPolicyProvider(true);
         rbNew.setLabel("New");
+        rbNew.setNextFocusableComponent(rbProduct);
         rbNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbNewActionPerformed(evt);
@@ -1077,6 +1233,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbProduct.setLabel("Product");
+        rbProduct.setNextFocusableComponent(rbOther);
         rbProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbProductActionPerformed(evt);
@@ -1091,6 +1248,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbOther.setLabel("Other(Preparation,Proofing, OdourControl...) ");
+        rbOther.setNextFocusableComponent(rbAM);
         rbOther.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbOtherActionPerformed(evt);
@@ -1100,6 +1258,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         rbInSuit.setSelected(true);
         rbInSuit.setText("In Suit Regular Service Day");
         rbInSuit.setActionCommand("");
+        rbInSuit.setNextFocusableComponent(rbEmergency);
         rbInSuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbInSuitActionPerformed(evt);
@@ -1127,7 +1286,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbOther)
                     .addComponent(rbFollowup))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlServiceLayout.setVerticalGroup(
             pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1152,6 +1311,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlPartOfDay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         rbAM.setText("AM");
+        rbAM.setNextFocusableComponent(rbPM);
         rbAM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbAMActionPerformed(evt);
@@ -1159,6 +1319,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         });
 
         rbPM.setText("PM");
+        rbPM.setNextFocusableComponent(rbAnytime);
         rbPM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbPMActionPerformed(evt);
@@ -1167,6 +1328,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
         rbAnytime.setSelected(true);
         rbAnytime.setText("Anytime");
+        rbAnytime.setNextFocusableComponent(jCalendar1);
         rbAnytime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbAnytimeActionPerformed(evt);
@@ -1197,10 +1359,14 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jCalendar1.setNextFocusableComponent(btnCancel);
         jCalendar1.setWeekOfYearVisible(false);
         jCalendar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jCalendar1MouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCalendar1MouseClicked(evt);
             }
         });
 
@@ -1232,6 +1398,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         btnCancel.setText("Cancel");
         btnCancel.setToolTipText("Return to Main Menu page");
         btnCancel.setName("btnCancel"); // NOI18N
+        btnCancel.setNextFocusableComponent(btnSave);
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -1249,6 +1416,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
         btnSave.setText("Save");
         btnSave.setEnabled(false);
+        btnSave.setNextFocusableComponent(btnNext);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -1289,16 +1457,16 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         .addGap(81, 81, 81)
                         .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pnlSchedule, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
-                        .addComponent(pnlService, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
+                        .addComponent(pnlSchedule, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1178, Short.MAX_VALUE)
+                        .addComponent(pnlService, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1178, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1368,6 +1536,25 @@ public class ServiceReceipt extends javax.swing.JFrame {
         rbSchedule.add(rbAM);
         rbSchedule.add(rbPM);
         rbSchedule.add(rbAnytime);
+    }
+    
+    private void disable_form(){
+        
+        for (Component cp : pnlCustomer.getComponents() ){
+            cp.setEnabled(false);
+        }
+        for (Component cp : pnlBillingCustomer.getComponents() ){
+            cp.setEnabled(false);
+        }
+        //pnlBillingCustomer.setEnabled(false);
+        //pnlCustomer.setEnabled(false);
+        btnSave.setEnabled(false);
+        btnNext.setEnabled(false);
+        txtCustomer.setEnabled(true);
+        lblBundled.setVisible(false);
+        cbBundle.setVisible(false);
+        lblAvailBundles.setVisible(false);
+        cmbBundles.setVisible(false);
     }
    
     private void btngrpPerServiceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngrpPerServiceMousePressed
@@ -1640,7 +1827,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
     private void txtCustomerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerKeyPressed
         // TODO add your handling code here:
         String strInput= this.txtCustomer.getText();
-        
+        System.out.println("key code " + evt.getKeyCode());
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
             if (CustomerType == "Existing"){
                 //Statement stmt = null;
@@ -1688,13 +1875,34 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 }    
             }
             else {
-                System.out.println("new customer");
+                System.out.println("new customer " + evt.getKeyCode());
+                //check the name to be at least 5 characters
+                if (txtCustomer.getText().length() >= 5){
+                    for (Component cp : pnlCustomer.getComponents() ){
+                        cp.setEnabled(true);
+                    }
+                    pnlCustomer.setEnabled(true);
+                    txtBillingName.setEnabled(true);
+
+                    /*
+                    txtCustInfo.setEnabled(true);
+                    txtStreet.setEnabled(true);
+                    txtUnit.setEnabled(true);
+                    txtStreetInfo.setEnabled(true);
+                    txtCity.setEnabled(true);
+                    txtProv.setEnabled(true);
+                    txtPostalCode.setEnabled(true);
+                    */
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                }
             }
         }        
     }//GEN-LAST:event_txtCustomerKeyPressed
 
     private void txtStreetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStreetKeyPressed
-        // TODO add your handling code here:
+        
         strInput = this.txtStreet.getText();
         
         if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
@@ -1741,6 +1949,9 @@ public class ServiceReceipt extends javax.swing.JFrame {
             }
             else {
                 System.out.println("new customer");
+                if (txtStreet.getText().length() <= 5){
+                    JOptionPane.showMessageDialog(null,"Customer Street is less than 5 characters","Street Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_txtStreetKeyPressed
@@ -1773,7 +1984,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         System.out.println("date is: " + jCalendar1.getCalendar().getTime().toString());
         
         CreateSRActivities SRActivities = new CreateSRActivities();
-        SRActivities.setSize(1200,840);
+        SRActivities.setSize(800,600);
         SRActivities.setLocationRelativeTo(null);
         SRActivities.setResizable(false);
         SRActivities.setLayout(new BorderLayout());
@@ -1798,6 +2009,179 @@ public class ServiceReceipt extends javax.swing.JFrame {
         frmDocumentation.setVisible(true);
         System.out.println("Documentation");
     }//GEN-LAST:event_btnDocumentationActionPerformed
+
+    private void txtCityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCityKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
+            if (CustomerType == "New"){
+                if (txtCity.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_txtCityKeyPressed
+
+    private void txtPhone1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhone1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
+            if (CustomerType == "New"){
+                if (txtPhone1.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Phone # is a mandatory field","Phone# is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    btnSave.setEnabled(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_txtPhone1KeyPressed
+
+    private void jCalendar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseClicked
+        btnNext.setEnabled(true);
+    }//GEN-LAST:event_jCalendar1MouseClicked
+
+    private void txtCustomerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusLost
+        System.out.println("new customer " );
+        //check the name to be at least 5 characters
+        if (txtCustomer.getText().length() >= 5){
+            for (Component cp : pnlCustomer.getComponents() ){
+                cp.setEnabled(true);
+            }
+            pnlCustomer.setEnabled(true);
+            txtBillingName.setEnabled(true);
+            txtCustInfo.requestFocus();
+            
+
+            /*
+            txtCustInfo.setEnabled(true);
+            txtStreet.setEnabled(true);
+            txtUnit.setEnabled(true);
+            txtStreetInfo.setEnabled(true);
+            txtCity.setEnabled(true);
+            txtProv.setEnabled(true);
+            txtPostalCode.setEnabled(true);
+            */
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
+            txtCustomer.requestFocus();
+        }
+    }//GEN-LAST:event_txtCustomerFocusLost
+
+    private void txtStreetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStreetFocusLost
+        if (txtStreet.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Street is a mandatory field","Street is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtStreet.requestFocus();
+        }
+    }//GEN-LAST:event_txtStreetFocusLost
+
+    private void txtCityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCityFocusLost
+        if (txtCity.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtCity.requestFocus();
+        }
+    }//GEN-LAST:event_txtCityFocusLost
+
+    private void txtPostalCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPostalCodeFocusGained
+        txtPostalCode.selectAll();
+    }//GEN-LAST:event_txtPostalCodeFocusGained
+
+    private void txtPhone1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone1FocusGained
+        txtPhone1.selectAll();
+    }//GEN-LAST:event_txtPhone1FocusGained
+
+    private void txtPhone2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone2FocusGained
+        txtPhone2.selectAll();
+    }//GEN-LAST:event_txtPhone2FocusGained
+
+    private void txtFaxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFaxFocusGained
+        txtFax.selectAll();
+    }//GEN-LAST:event_txtFaxFocusGained
+
+    private void txtBillingNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingNameFocusLost
+        if (txtBillingName.getText().length() > 3){
+            for (Component cp : pnlBillingCustomer.getComponents() ){
+                cp.setEnabled(true);
+            };
+        }
+            
+    }//GEN-LAST:event_txtBillingNameFocusLost
+
+    private void txtBillingNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingNameKeyPressed
+        if (txtBillingName.getText().length() > 3){
+            for (Component cp : pnlBillingCustomer.getComponents() ){
+                cp.setEnabled(true);
+                txtBillingAlias.requestFocus();
+            };
+        }
+    }//GEN-LAST:event_txtBillingNameKeyPressed
+
+    private void txtBillingPostalCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPostalCodeFocusGained
+        txtBillingPostalCode.selectAll();
+    }//GEN-LAST:event_txtBillingPostalCodeFocusGained
+
+    private void txtBillingPhone1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone1FocusGained
+        txtBillingPhone1.selectAll();
+    }//GEN-LAST:event_txtBillingPhone1FocusGained
+
+    private void txtBillingPhone2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone2FocusGained
+        txtBillingPhone2.selectAll();
+    }//GEN-LAST:event_txtBillingPhone2FocusGained
+
+    private void txtBillingFaxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingFaxFocusGained
+        txtBillingFax.selectAll();
+    }//GEN-LAST:event_txtBillingFaxFocusGained
+
+    private void txtBillingStreetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingStreetFocusLost
+        if (txtBillingStreet.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Billing Street is a mandatory field","Street is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtBillingStreet.requestFocus();
+        }
+    }//GEN-LAST:event_txtBillingStreetFocusLost
+
+    private void txtBillingCityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingCityFocusLost
+        if (txtBillingCity.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Billing City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtBillingCity.requestFocus();
+        }
+    }//GEN-LAST:event_txtBillingCityFocusLost
+
+    private void txtBillingPhone1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone1FocusLost
+        if (txtBillingPhone1.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Billing Phone is a mandatory field","Phone is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtBillingPhone1.requestFocus();
+        }
+    }//GEN-LAST:event_txtBillingPhone1FocusLost
+
+    private void txtBillingStreetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingStreetKeyPressed
+        if (txtBillingStreet.getText().length() <= 5){
+            JOptionPane.showMessageDialog(null,"Billing Street is less than 5 characters","Street Name too short!!!",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_txtBillingStreetKeyPressed
+
+    private void txtBillingCityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingCityKeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            if (CustomerType == "New"){
+                if (txtBillingCity.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Billing City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_txtBillingCityKeyPressed
+
+    private void txtBillingPhone1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingPhone1KeyPressed
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            if (CustomerType == "New"){
+                if (txtBillingPhone1.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Billing Phone is a mandatory field","Phone is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_txtBillingPhone1KeyPressed
+
+    private void txtPhone1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone1FocusLost
+        if (txtPhone1.getText().isEmpty() && txtPhone1.getText() != "xxx-xxx-xxxx" && txtPhone1.getText().length() != 12){
+            JOptionPane.showMessageDialog(null,"Phone is a mandatory field","Phone is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+            txtPhone1.requestFocus();
+        }
+    }//GEN-LAST:event_txtPhone1FocusLost
     
     public class MultipleRecords extends JFrame implements ActionListener{
         JLabel Lbl = new JLabel("These customers match the search criteria. Please select one:");
