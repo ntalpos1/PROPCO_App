@@ -1,7 +1,6 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,10 +29,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter.Entry;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -189,7 +187,7 @@ public class CreateSRActivities extends JFrame {
         });
         
         //fill the combobox
-        //fillcombo();
+        fillcombo();
         
         //table.getColumnModel().getColumn(0).setPreferredWidth(25);
         //table.getColumnModel().getColumn(1).setPreferredWidth(40);
@@ -295,9 +293,12 @@ public class CreateSRActivities extends JFrame {
     
     
     private void btnCompleteReqActionPerformed(java.awt.event.ActionEvent evt) {
+        //save all table records in the db
+        insert_activities();
         FollowupDlg followup_dlg = new FollowupDlg();
         followup_dlg.init();
         followup_dlg.dispose();
+        dispose();
     }
     
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,38 +375,45 @@ public class CreateSRActivities extends JFrame {
         }
         public void actionPerformed(ActionEvent e1)
             {
-                if(e1.getSource() == BtnOK){
-                    //Dlg.setSize(250, 170);
-                    //check if value is numeric
-                    FollowupCnt = cmbFollowup.getSelectedItem().toString() ;
-                    //FollowupCnt.intValue(txtFollowupCount getText());
-                    System.out.println("actioned performed followup count = " + FollowupCnt);
-                    
-                    int crt_count=1;
-                    System.out.println("PastDate outside of loop" + PastDate);
-                    do
-                        //for(int count=1;count<=Integer.parseInt(FollowupCnt);count++){
-                        {    
-                        FollowupDatesDlg follow_dates = new FollowupDatesDlg();
-                        PastDate=false;
-                        follow_dates.init();
-                        System.out.println("PastDate in loop after init " + PastDate);
-                        //check if the date was in the future and reset counter if not
-                        if(PastDate==true) {
-                            System.out.println("in here??");
-                            crt_count=crt_count-1;
-                        }
-                        crt_count++;
-                        follow_dates.dispose();
-                        System.out.println("followup counter is: " + crt_count);
-                    
-                        Dlg.dispose();
+            if(e1.getSource() == BtnOK){
+                //Dlg.setSize(250, 170);
+                //check if value is numeric
+                FollowupCnt = cmbFollowup.getSelectedItem().toString() ;
+                //FollowupCnt.intValue(txtFollowupCount getText());
+                System.out.println("actioned performed followup count = " + FollowupCnt);
+
+                int crt_count=1;
+                System.out.println("PastDate outside of loop" + PastDate);
+                do
+                    //for(int count=1;count<=Integer.parseInt(FollowupCnt);count++){
+                    {    
+                    FollowupDatesDlg follow_dates = new FollowupDatesDlg();
+                    PastDate=false;
+                    follow_dates.init();
+                    System.out.println("PastDate in loop after init " + PastDate);
+                    //check if the date was in the future and reset counter if not
+                    if(PastDate==true) {
+                        System.out.println("in here??");
+                        crt_count=crt_count-1;
                     }
-                    while (crt_count<=Integer.parseInt(FollowupCnt));
-                }            
-                else if(e1.getSource() == BtnCancel){
-                        Dlg.dispose();
-                    }
+                    crt_count++;
+                    follow_dates.dispose();
+                    System.out.println("followup counter is: " + crt_count);
+
+                    Dlg.dispose();
+                }
+                while (crt_count<=Integer.parseInt(FollowupCnt));
+            }            
+            else if(e1.getSource() == BtnCancel){
+                //save the records now in here!!!
+                Dlg.dispose();
+                MainMenu regFace = new MainMenu();
+                regFace.setSize(700,800);
+                regFace.setLocationRelativeTo(null);
+                regFace.setResizable(false);
+                dispose();
+                regFace.setVisible(true);
+            }
          }
     }
     
@@ -588,6 +596,71 @@ public class CreateSRActivities extends JFrame {
                  //   }
          }
     }
+    
+    //private Object makeObj(final String item)  {
+    //        return new Object() { public String toString() { return item; } };
+    //    }
+    
+    public Object avoid_null(Object field_value){
+        //String my_string;
+        //my_string = (field_value == null) ? "": field_value.toString();
+        return (field_value == null) ? "": field_value;//.toString();
+        //return my_string;
+    }
+    public void insert_activities(){
+        try{
+            int rows_count = table.getRowCount();
+            sqlStmt = "INSERT INTO Service_Request_activity_test "
+                                   + "(ServiceReqNr,ActivityNr,WONr,Unit,Notes,PestsID,ActivityStatus,Creation_Date,Update_Date,User_id) "
+                                   + "values (?,?,?,?,?,?,?,?,?,?)";
+            System.out.println(sqlStmt);
+            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
+            
+            for(int row = 0; row<rows_count; row++)
+            {
+                Integer ActivityNr = row+1;
+                /*
+                String WONr = (String)table.getValueAt(row, 0);
+                String Unit = (String)table.getValueAt(row, 1);
+                String Notes = (String)table.getValueAt(row, 2);
+                String PestType = (String)table.getValueAt(row, 3);
+                */
+                String WONr = (String)avoid_null(table.getValueAt(row,0));
+                String Unit = (String)avoid_null(table.getValueAt(row, 1));
+                String Notes = (String)avoid_null(table.getValueAt(row,3));
+                String PestType = (String)avoid_null(table.getValueAt(row,4));
+                System.out.println("WONr:"+ WONr + ";Unit:" + Unit + ";Notes:" + Notes + ";PestType:" + PestType);
+                
+                /*        
+                if(! Unit.isEmpty()){
+                    stmt.setInt(1,Integer.parseInt(ServiceReceipt.ServiceReqNr));
+                    stmt.setInt(2,ActivityNr);
+                    stmt.setString(3, WONr);
+                    stmt.setString(4, Unit);
+                    stmt.setString(5, Notes);
+                    String sqlStmt1 = "Select PestsID from Pests WHERE PestsType = '" + PestType + "'";
+                    rs = SQLConnection.getRecordSet(sqlStmt1);
+                    Integer PestsID = rs.getInt("PestsID");
+                    System.out.println("PestsID=" + PestsID);
+                    stmt.setInt(6, PestsID);
+                    stmt.setString(7,"I");//I-Initial,S-Sent,R-Received,C-completed,X-Cancelled
+                    stmt.setString(8,DateUtils.now());
+                    stmt.setString(9,DateUtils.now());
+                    stmt.setInt(10,frmLogin.user_id);
+                    
+                    stmt.addBatch();
+                }*/
+            }
+            //stmt.executeBatch();
+            //SQLConnection.conn.commit();
+            //Update ActivityCount in ServiceRequest table
+            
+        }
+        catch(Exception e){
+            //error here!!!
+            //JOptionPane.showMessageDialog(this,e.getMessage());
+        }                                                
+   }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

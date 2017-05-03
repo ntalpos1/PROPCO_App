@@ -204,7 +204,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         );
 
         pnlBillingCustomer.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Billing Info(only if different):", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
-        pnlBillingCustomer.setEnabled(false);
         pnlBillingCustomer.setFocusable(false);
         pnlBillingCustomer.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         pnlBillingCustomer.setMinimumSize(new java.awt.Dimension(100, 100));
@@ -609,7 +608,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlBillingCustomerLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtBillingAlias, txtBillingCity, txtBillingContact, txtBillingEmail, txtBillingExt1, txtBillingExt2, txtBillingFax, txtBillingName, txtBillingPhone1, txtBillingPhone2, txtBillingPostalCode, txtBillingProv, txtBillingStreet});
 
         pnlCustomer.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Customer Info:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
-        pnlCustomer.setEnabled(false);
         pnlCustomer.setFocusable(false);
         pnlCustomer.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         pnlCustomer.setRequestFocusEnabled(false);
@@ -1496,6 +1494,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
     String DaySched = "";
     Integer CustID = null;
     Integer BusinessID = null;
+    Integer DeptID = null;
+    public static String ServiceReqNr = null;
     String FollowupCnt = "";
     
     public static String CustomerType = "";
@@ -1539,22 +1539,40 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }
     
     private void disable_form(){
-        
+        System.out.println("disable_form");
         for (Component cp : pnlCustomer.getComponents() ){
             cp.setEnabled(false);
         }
         for (Component cp : pnlBillingCustomer.getComponents() ){
             cp.setEnabled(false);
         }
+        for (Component cp : pnlDetails.getComponents() ){
+            cp.setEnabled(false);
+        }
+        for (Component cp : pnlFreq.getComponents() ){
+            cp.setEnabled(false);
+        }
+        for (Component cp : pnlPayment.getComponents() ){
+            cp.setEnabled(false);
+        }
+        for (Component cp : pnlService.getComponents() ){
+            cp.setEnabled(false);
+        }
+        for (Component cp : pnlSchedule.getComponents() ){
+            cp.setEnabled(false);
+        }
         //pnlBillingCustomer.setEnabled(false);
         //pnlCustomer.setEnabled(false);
+        
         btnSave.setEnabled(false);
         btnNext.setEnabled(false);
         txtCustomer.setEnabled(true);
+        /*
         lblBundled.setVisible(false);
         cbBundle.setVisible(false);
         lblAvailBundles.setVisible(false);
         cmbBundles.setVisible(false);
+        */
     }
    
     private void btngrpPerServiceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngrpPerServiceMousePressed
@@ -1744,7 +1762,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         sqlStmt = "SELECT User_ID from Users where user_name = '" + frmLogin.user_name + "'";
                         rs = SQLConnection.getRecordSet(sqlStmt);
                         Integer user_id = rs.getInt("User_ID");
-                        sqlStmt = "UPDATE test SET CustomerName = '" + txtCustomer.getText() + "'," 
+                        sqlStmt = "UPDATE Customer SET CustomerName = '" + txtCustomer.getText() + "'," 
                                 + " Notes = '" + txtCustInfo.getText() + "',"
                                 + " Address = '" + txtStreet.getText() + "',"
                                 + " AddressNotes = '" + txtStreetInfo.getText() + "',"
@@ -1756,8 +1774,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 + " Ext = '" + txtExt1.getText() + "',"
                                 + " SecondaryPhone = '" + txtPhone2.getText() + "',"
                                 + " Ext2 = '" + txtExt2.getText() + "',"
-                                + " ThirdPhone = '',"
-                                + " Ext3 = '',"
                                 + " Other = '',"
                                 + " Fax = '" + txtFax.getText() + "',"
                                 + " EmailAddress = '" + txtEmail.getText() + "',"
@@ -1778,13 +1794,16 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             System.out.println("count is: " + rs.getInt("num"));
                             if (rs.getInt("num") == 0){
-                                sqlStmt = "INSERT INTO 'Bundles' ('BID','BundleName') VALUES (" + BusinessID + ",'" + bundle + "')";
+                                sqlStmt = "INSERT INTO Bundles (BID,BundleName) VALUES (?,?)";
                                 System.out.println(sqlStmt);
-                                PreparedStatement stmt = SQLConnection.conn.prepareStatement("insert into Bundles (BID, BundleName) values (?, ?)");
-                                System.out.println("insert into Bundles (BID, BundleName) values (?, ?)");
+                                PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);//"insert into Bundles (BID, BundleName) values (?, ?)");
+                                //System.out.println("insert into Bundles (BID, BundleName) values (?, ?)");
                                 stmt.setInt(1, BusinessID);
+                                System.out.println("1");
                                 stmt.setString(2, bundle);
+                                System.out.println("2");
                                 stmt.executeUpdate();
+                                
                                 //SQLConnection.insertRecordSet(sqlStmt);
                             }
                             
@@ -1821,22 +1840,21 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }
     
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        System.out.println("window activated");         
+        //System.out.println("window activated");         
     }//GEN-LAST:event_formWindowActivated
 
     private void txtCustomerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerKeyPressed
         // TODO add your handling code here:
         String strInput= this.txtCustomer.getText();
-        System.out.println("key code " + evt.getKeyCode());
-        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)  {
             if (CustomerType == "Existing"){
                 //Statement stmt = null;
                 System.out.println("key pressed 1");
                 try {
                     System.out.println("conn success");
                     System.out.println("stmt ok " + strInput);
-                    String sqlStmt = "select count(*) as num from test where CustomerName like '%" + strInput + "%'";
-                    //String tblName = "test";
+                    String sqlStmt = "select count(*) as num from Customer where CustomerName like '%" + strInput + "%'";
+                    //String tblName = "Customer";
                     //rs = stmt.executeQuery(sqlStmt);
                     rs = SQLConnection.getRecordSet(sqlStmt);
                     System.out.println("stmt ok");
@@ -1847,8 +1865,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null,"There is no customer which have the Name containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
                             break;
                         case 1:
-                            sqlStmt = "select * from test where CustomerName like '%" + strInput + "%'";
-                            //tblName = "test";
+                            sqlStmt = "select * from Customer where CustomerName like '%" + strInput + "%'";
+                            //tblName = "Customer";
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             //rs.next();
                             fillInfo(rs);
@@ -1857,8 +1875,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             break;
                         default:
                             System.out.println("multiple records");
-                            sqlStmt = "select CustomerName, Address from test where CustomerName like '%" + strInput + "%'";
-                            //String tblName = "test";
+                            sqlStmt = "select CustomerName, Address from Customer where CustomerName like '%" + strInput + "%'";
+                            //String tblName = "Customer";
                             rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
                             MultipleRecords MultipleCustomers = new MultipleRecords();
                             MultipleCustomers.init();
@@ -1875,7 +1893,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 }    
             }
             else {
-                System.out.println("new customer " + evt.getKeyCode());
+                System.out.println("new customer ");
                 //check the name to be at least 5 characters
                 if (txtCustomer.getText().length() >= 5){
                     for (Component cp : pnlCustomer.getComponents() ){
@@ -1912,8 +1930,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 //System.out.println("key pressed 1");
                 try {
                     //System.out.println("stmt ok");
-                    sqlStmt = "select count(*) as num from test where Address like '%" + strInput + "%'";
-                    //tblName = "test";
+                    sqlStmt = "select count(*) as num from Customer where Address like '%" + strInput + "%'";
+                    //tblName = "Customer";
                     rs = SQLConnection.getRecordSet(sqlStmt);
                     System.out.println("resultset " + sqlStmt);
                     //rs.next();
@@ -1922,7 +1940,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null,"There is no customer which have the street containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
                             break;
                         case 1:
-                            sqlStmt = "select * from test where Address like '%" + strInput + "%'";
+                            sqlStmt = "select * from Customer where Address like '%" + strInput + "%'";
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             //rs.next();
                             fillInfo(rs);
@@ -1931,7 +1949,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             break;
                         default:
                             System.out.println("multiple records");
-                            String sqlStmt = "select CustomerName, Address from test where Address like '%" + strInput + "%'";
+                            String sqlStmt = "select CustomerName, Address from Customer where Address like '%" + strInput + "%'";
                             rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
                             MultipleRecords MultipleCustomers = new MultipleRecords();
                             MultipleCustomers.init();
@@ -1981,7 +1999,9 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        System.out.println("date is: " + jCalendar1.getCalendar().getTime().toString());
+        //we create the servicerequest and fill info in the Service_Request table
+        create_service_request();
+        //System.out.println("date is: " + jCalendar1.getCalendar().getTime().toString());
         
         CreateSRActivities SRActivities = new CreateSRActivities();
         SRActivities.setSize(800,600);
@@ -2021,7 +2041,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCityKeyPressed
 
     private void txtPhone1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhone1KeyPressed
-        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_TAB)) {
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER) ) {
             if (CustomerType == "New"){
                 if (txtPhone1.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null,"Phone # is a mandatory field","Phone# is Mandatory!!",JOptionPane.ERROR_MESSAGE);
@@ -2038,30 +2058,83 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_jCalendar1MouseClicked
 
     private void txtCustomerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusLost
-        System.out.println("new customer " );
-        //check the name to be at least 5 characters
-        if (txtCustomer.getText().length() >= 5){
-            for (Component cp : pnlCustomer.getComponents() ){
-                cp.setEnabled(true);
+        //temporary measure check a field is populated
+        System.out.println("let's see value " + txtCity.toString().isEmpty() + " city");
+        if (!txtCity.toString().isEmpty()){
+        if (CustomerType == "Existing"){
+            //Statement stmt = null;
+            System.out.println("key pressed 1");
+            try {
+                //System.out.println("conn success");
+                System.out.println("stmt ok " + strInput);
+                String sqlStmt = "select count(*) as num from Customer where CustomerName like '%" + strInput + "%'";
+                //String tblName = "Customer";
+                //rs = stmt.executeQuery(sqlStmt);
+                rs = SQLConnection.getRecordSet(sqlStmt);
+                System.out.println("stmt ok");
+                System.out.println("resultset " + sqlStmt);
+                //rs.next();
+                switch (rs.getInt("num")){
+                    case 0:
+                        JOptionPane.showMessageDialog(null,"There is no customer which have the Name containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
+                        break;
+                    case 1:
+                        sqlStmt = "select * from Customer where CustomerName like '%" + strInput + "%'";
+                        //tblName = "Customer";
+                        rs = SQLConnection.getRecordSet(sqlStmt);
+                        //rs.next();
+                        fillInfo(rs);
+                        btnNext.setEnabled(true);
+                        btnSave.setEnabled(true);
+                        break;
+                    default:
+                        System.out.println("multiple records");
+                        sqlStmt = "select CustomerName, Address from Customer where CustomerName like '%" + strInput + "%'";
+                        //String tblName = "Customer";
+                        rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
+                        MultipleRecords MultipleCustomers = new MultipleRecords();
+                        MultipleCustomers.init();
+                        MultipleCustomers.dispose();
+                        btnNext.setEnabled(true);
+                        btnSave.setEnabled(true);
+                        break;
+                }
             }
-            pnlCustomer.setEnabled(true);
-            txtBillingName.setEnabled(true);
-            txtCustInfo.requestFocus();
-            
-
-            /*
-            txtCustInfo.setEnabled(true);
-            txtStreet.setEnabled(true);
-            txtUnit.setEnabled(true);
-            txtStreetInfo.setEnabled(true);
-            txtCity.setEnabled(true);
-            txtProv.setEnabled(true);
-            txtPostalCode.setEnabled(true);
-            */
+                catch (SQLException ex) {
+                Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
+                //if (stmt != null) { stmt.close(); }
+                System.out.println("error");
+            }    
         }
         else{
-            JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
-            txtCustomer.requestFocus();
+            System.out.println("new customer " );
+            //check the name to be at least 5 characters
+            if (txtCustomer.getText().length() >= 5){
+                for (Component cp : pnlCustomer.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                pnlCustomer.setEnabled(true);
+                txtBillingName.setEnabled(true);
+                btnSave.setEnabled(true);
+                btnNext.setEnabled(true);
+                txtCustInfo.requestFocus();
+
+
+                /*
+                txtCustInfo.setEnabled(true);
+                txtStreet.setEnabled(true);
+                txtUnit.setEnabled(true);
+                txtStreetInfo.setEnabled(true);
+                txtCity.setEnabled(true);
+                txtProv.setEnabled(true);
+                txtPostalCode.setEnabled(true);
+                */
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                txtCustomer.requestFocus();
+            }
+        }
         }
     }//GEN-LAST:event_txtCustomerFocusLost
 
@@ -2096,20 +2169,86 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFaxFocusGained
 
     private void txtBillingNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingNameFocusLost
-        if (txtBillingName.getText().length() > 3){
-            for (Component cp : pnlBillingCustomer.getComponents() ){
-                cp.setEnabled(true);
-            };
-        }
+        if (txtBillingName.getText().length() == 0){
+                for (Component cp : pnlFreq.getComponents() ){
+                    cp.setEnabled(true);
+                    pnlFreq.requestFocus();
+                }
+                for (Component cp : pnlPayment.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlService.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlSchedule.getComponents() ){
+                    cp.setEnabled(true);
+                }
+            }
+            else if (txtBillingName.getText().length() > 3) {
+                for (Component cp : pnlBillingCustomer.getComponents() ){
+                    cp.setEnabled(true);
+                    txtPO.setEnabled(true);
+                    txtBillingAlias.requestFocus();
+                }
+                for (Component cp : pnlFreq.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlPayment.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlService.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlSchedule.getComponents() ){
+                    cp.setEnabled(true);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Billing Name is less than 4 characters","Billing Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                txtBillingName.requestFocus();
+            }
             
     }//GEN-LAST:event_txtBillingNameFocusLost
 
     private void txtBillingNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingNameKeyPressed
-        if (txtBillingName.getText().length() > 3){
-            for (Component cp : pnlBillingCustomer.getComponents() ){
-                cp.setEnabled(true);
-                txtBillingAlias.requestFocus();
-            };
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if (txtBillingName.getText().length() == 0){
+                for (Component cp : pnlFreq.getComponents() ){
+                    cp.setEnabled(true);
+                    pnlFreq.requestFocus();
+                }
+                for (Component cp : pnlPayment.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlService.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlSchedule.getComponents() ){
+                    cp.setEnabled(true);
+                }
+            }
+            else if (txtBillingName.getText().length() > 3) {
+                for (Component cp : pnlBillingCustomer.getComponents() ){
+                    cp.setEnabled(true);
+                    txtBillingAlias.requestFocus();
+                }
+                for (Component cp : pnlFreq.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlPayment.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlService.getComponents() ){
+                    cp.setEnabled(true);
+                }
+                for (Component cp : pnlSchedule.getComponents() ){
+                    cp.setEnabled(true);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Billing Name is less than 4 characters","Billing Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                txtBillingName.requestFocus();
+            }
         }
     }//GEN-LAST:event_txtBillingNameKeyPressed
 
@@ -2151,8 +2290,11 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBillingPhone1FocusLost
 
     private void txtBillingStreetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingStreetKeyPressed
-        if (txtBillingStreet.getText().length() <= 5){
-            JOptionPane.showMessageDialog(null,"Billing Street is less than 5 characters","Street Name too short!!!",JOptionPane.ERROR_MESSAGE);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if (txtBillingStreet.getText().length() <= 5){
+                JOptionPane.showMessageDialog(null,"Billing Street is less than 5 characters","Street Name too short!!!",JOptionPane.ERROR_MESSAGE);
+                txtBillingStreet.requestFocus();
+            }
         }
     }//GEN-LAST:event_txtBillingStreetKeyPressed
 
@@ -2161,6 +2303,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             if (CustomerType == "New"){
                 if (txtBillingCity.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null,"Billing City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
+                    txtBillingCity.requestFocus();
                 }
             }
         }
@@ -2227,14 +2370,14 @@ public class ServiceReceipt extends javax.swing.JFrame {
             //System.out.println("actioned performed by ");      
             if(e1.getSource() == BtnOK){
                 //return the item/recordset which was selected
-                System.out.println("actioned performed " + CustList.getSelectedItem().toString().replace(" at ", "|"));
+                //System.out.println("actioned performed " + CustList.getSelectedItem().toString().replace(" at ", "|"));
                 String new_String = CustList.getSelectedItem().toString().replace(" at ", "|");
                 String delims = "[|]";
                 String [] tokens = new_String.split(delims);
-                System.out.println("actioned " + tokens[0]);
-                System.out.println("another " + tokens[1]);
+                //System.out.println("actioned " + tokens[0]);
+                //System.out.println("another " + tokens[1]);
                 
-                sqlStmt = "select * from test where Address = '" + tokens[1] + "' and CustomerName = '" + tokens[0] + "'";
+                sqlStmt = "select * from Customer where Address = '" + tokens[1] + "' and CustomerName = '" + tokens[0] + "'";
                 rs = SQLConnection.getRecordSet(sqlStmt);
                 fillInfo(rs);
                 Dlg.dispose();
@@ -2315,6 +2458,73 @@ public class ServiceReceipt extends javax.swing.JFrame {
         
     }
     
+    public void create_service_request(){
+        try{
+            
+            sqlStmt = "INSERT INTO Service_Request "
+                                   + "(Cust_id,BID,DeptID,PONr,Invoicing,Emergency,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
+                                   + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            System.out.println(sqlStmt);
+            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
+            //Integer ServiceReqNr generated by the db
+            stmt.setInt(1, CustID);
+            stmt.setInt(2, BusinessID);
+            if (!txtBillingDept.getText().isEmpty()){
+                System.out.println("DeptID=" + DeptID);
+                String sqlStmt1 = "Select DeptID from Department WHERE DeptName = '" + txtBillingDept.getText() + "'";
+                rs = SQLConnection.getRecordSet(sqlStmt1);
+                DeptID = rs.getInt("DeptID");
+                stmt.setInt(3,DeptID);
+                System.out.println("DeptID=" + DeptID);
+            }
+            else{
+                DeptID = 0;
+                stmt.setInt(3,DeptID);
+            }
+            stmt.setString(4, txtPO.getText().toString());
+            
+            stmt.setString(5,Freq);
+            if (ServiceType == "Emergency Service"){
+                stmt.setString(6,"1");
+            }
+            else{
+                stmt.setString(6,"0");
+            }
+            stmt.setString(7,ServiceType);
+            stmt.setString(8,Payment);
+            stmt.setString(9,DaySched);
+            stmt.setString(10,jCalendar1.getCalendar().getTime().toString());
+            stmt.setString(11,DateUtils.now());
+            stmt.setString(12,DateUtils.now());
+            stmt.setInt(13,frmLogin.user_id);        
+            stmt.setInt(14,0);
+            System.out.println("CustID:" + CustID + ";BusinessID:" + BusinessID + ";DeptID:" + DeptID + ";PO:" + txtPO.getText().toString() + ";Freq:" 
+                    + Freq + ";ServiceType:" + ServiceType + ";Payment:" + Payment + ";DaySched:" + DaySched + ";Calendar:" 
+                    + jCalendar1.getCalendar().getTime().toString() + ";Creation_date:" + DateUtils.now() + ";Update_date:" + DateUtils.now() 
+                    + ";user_id:" + frmLogin.user_id);
+            
+            //stmt.executeUpdate();   
+
+            //SQLConnection.conn.commit();
+            //need to retrieve ServiceReqNr
+            String sqlStmt1 = "Select ServiceReqNr from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
+            //rs = SQLConnection.getRecordSet(sqlStmt);
+            System.out.println("ServiceReqNr is: " + rs.getInt("ServiceReqNr"));
+            //ServiceReqNr = rs.getString("ServiceReqNr");
+            
+        }
+        catch(Exception e){
+            //error to be captured!!!!
+            //JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+    }
+    
+    public Object avoid_null(Object field_value){
+        //String my_string;
+        //my_string = (field_value == null) ? "": field_value.toString();
+        return (field_value == null) ? "": field_value;//.toString();
+        //return my_string;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDocumentation;

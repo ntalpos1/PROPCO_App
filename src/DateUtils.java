@@ -38,13 +38,23 @@ public class DateUtils {
 
     public static String now() {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return sdf.format(cal.getTime());
+        
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //Date date = new Date();
+        //System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
     }
     public static Object makeObj(final String item)  {
             return new Object() { public String toString() { return item; } };
     }
     
+    public Object avoid_null(Object field_value){
+        //String my_string;
+        //my_string = (field_value == null) ? "": field_value.toString();
+        return (field_value == null) ? "": field_value;//.toString();
+        //return my_string;
+    }
 /*    The code to delete a row from a table using the DefaultTableModel would be:
 Action delete = new AbstractAction()
 {

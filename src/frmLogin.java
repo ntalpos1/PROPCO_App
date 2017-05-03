@@ -25,6 +25,7 @@ public class frmLogin extends javax.swing.JFrame {
 
     //public static List<ArrayList<String>> my_array;
     public static String user_name;
+    public static Integer user_id;
    
     /**
      * Creates new form PROPCO_UI
@@ -172,9 +173,10 @@ public class frmLogin extends javax.swing.JFrame {
 
         user_name = puname;
         
-        String sqlStmt = "select user_name,password,full_privilege,Service_Receipt,Assign_Service_Tech,Pending_WO,Review_SR,Invoices,Reports from Users where user_name = '" + puname + "'";
+        String sqlStmt = "select user_id,user_name,password,full_privilege,Service_Receipt,Assign_Service_Tech,Pending_WO,Review_SR,Invoices,Reports from Users where user_name = '" + puname + "'";
         try {
             rs = SQLConnection.getRecordSet(sqlStmt);
+            user_id = rs.getInt("user_id");
             txtUser.setText(rs.getString("user_name"));
             txtPassword.setText(rs.getString("password"));
             char [] dbpassArray = rs.getString("password").toCharArray();
