@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -36,14 +37,30 @@ public class DateUtils {
     String sqlStmt = "";
     Statement stmt ;
 
-    public static String now() {
+    public static String now_date_time() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return sdf.format(cal.getTime());
-        
+        Date my_date = new Date();
+        //return sdf.format(cal.getTime());
+        return sdf.format(my_date);
         //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //Date date = new Date();
         //System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+    }
+    public static String now_date() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        Date my_date = new Date();
+        //return sdf.format(cal.getTime());
+        return sdf.format(my_date);
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //Date date = new Date();
+        //System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+    }
+    
+    public static String Calendar_date(Date my_date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        return sdf.format(my_date);
     }
     public static Object makeObj(final String item)  {
             return new Object() { public String toString() { return item; } };

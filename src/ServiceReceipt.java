@@ -3,13 +3,17 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -20,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 
 /*
@@ -42,6 +47,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
     public ServiceReceipt() {
         System.out.println("===ServiceReceipt===");
         initComponents();
+        //correct tab key functionality
+        allow_vk_tab();
         grpFreq();
         grpServType();
         grpPayment();
@@ -141,9 +148,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlDetails = new javax.swing.JPanel();
         lblPO = new javax.swing.JLabel();
         txtPO = new javax.swing.JTextField();
-        pnlFreq = new javax.swing.JPanel();
-        btngrpPerService = new javax.swing.JRadioButton();
-        btngrpMonthly = new javax.swing.JRadioButton();
         pnlPayment = new javax.swing.JPanel();
         rbCheck = new javax.swing.JRadioButton();
         rbVisa = new javax.swing.JRadioButton();
@@ -156,7 +160,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         rbRegular = new javax.swing.JRadioButton();
         rbNew = new javax.swing.JRadioButton();
         rbProduct = new javax.swing.JRadioButton();
-        rbFollowup = new javax.swing.JRadioButton();
         rbOther = new javax.swing.JRadioButton();
         rbInSuit = new javax.swing.JRadioButton();
         pnlSchedule = new javax.swing.JPanel();
@@ -169,6 +172,9 @@ public class ServiceReceipt extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        pnlFreq = new javax.swing.JPanel();
+        btngrpPerService = new javax.swing.JRadioButton();
+        btngrpMonthly = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1100, 772));
@@ -319,11 +325,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingName.setMinimumSize(new java.awt.Dimension(68, 17));
         txtBillingName.setNextFocusableComponent(txtBillingAlias);
         txtBillingName.setPreferredSize(new java.awt.Dimension(68, 17));
-        txtBillingName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtBillingNameFocusLost(evt);
-            }
-        });
         txtBillingName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBillingNameKeyPressed(evt);
@@ -337,14 +338,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingPhone1.setText("xxx-xxx-xxxx");
         txtBillingPhone1.setToolTipText("");
         txtBillingPhone1.setNextFocusableComponent(txtBillingExt1);
-        txtBillingPhone1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtBillingPhone1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtBillingPhone1FocusLost(evt);
-            }
-        });
         txtBillingPhone1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBillingPhone1KeyPressed(evt);
@@ -355,11 +348,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingPhone2.setText("xxx-xxx-xxxx");
         txtBillingPhone2.setToolTipText("");
         txtBillingPhone2.setNextFocusableComponent(txtBillingExt2);
-        txtBillingPhone2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtBillingPhone2FocusGained(evt);
-            }
-        });
 
         txtBillingExt1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingExt1.setNextFocusableComponent(txtBillingPhone2);
@@ -377,11 +365,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingFax.setText("xxx-xxx-xxxx");
         txtBillingFax.setToolTipText("");
         txtBillingFax.setNextFocusableComponent(txtBillingEmail);
-        txtBillingFax.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtBillingFaxFocusGained(evt);
-            }
-        });
 
         txtBillingEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingEmail.setNextFocusableComponent(txtBillingDept);
@@ -391,11 +374,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingCity.setMinimumSize(new java.awt.Dimension(68, 17));
         txtBillingCity.setNextFocusableComponent(txtBillingProv);
         txtBillingCity.setPreferredSize(new java.awt.Dimension(68, 17));
-        txtBillingCity.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtBillingCityFocusLost(evt);
-            }
-        });
         txtBillingCity.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBillingCityKeyPressed(evt);
@@ -408,22 +386,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtBillingPostalCode.setMinimumSize(new java.awt.Dimension(68, 17));
         txtBillingPostalCode.setNextFocusableComponent(txtBillingContact);
         txtBillingPostalCode.setPreferredSize(new java.awt.Dimension(68, 17));
-        txtBillingPostalCode.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtBillingPostalCodeFocusGained(evt);
-            }
-        });
 
         txtBillingStreet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtBillingStreet.setMaximumSize(new java.awt.Dimension(68, 17));
         txtBillingStreet.setMinimumSize(new java.awt.Dimension(68, 17));
         txtBillingStreet.setNextFocusableComponent(txtBillingCity);
         txtBillingStreet.setPreferredSize(new java.awt.Dimension(68, 17));
-        txtBillingStreet.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtBillingStreetFocusLost(evt);
-            }
-        });
         txtBillingStreet.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBillingStreetKeyPressed(evt);
@@ -513,8 +481,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 .addComponent(txtBillingFax, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtBillingAlias, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtBillingStreet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -529,7 +496,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addComponent(lblBillingPostalCode)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txtBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(txtBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(11, Short.MAX_VALUE))
             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                 .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -737,11 +705,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCustomer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txtCustomer.setNextFocusableComponent(txtCustInfo);
-        txtCustomer.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomerFocusLost(evt);
-            }
-        });
         txtCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCustomerKeyPressed(evt);
@@ -755,14 +718,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtPhone1.setText("xxx-xxx-xxxx");
         txtPhone1.setToolTipText("");
         txtPhone1.setNextFocusableComponent(txtExt1);
-        txtPhone1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPhone1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPhone1FocusLost(evt);
-            }
-        });
         txtPhone1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPhone1KeyPressed(evt);
@@ -773,11 +728,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtPhone2.setText("xxx-xxx-xxxx");
         txtPhone2.setToolTipText("");
         txtPhone2.setNextFocusableComponent(txtExt2);
-        txtPhone2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPhone2FocusGained(evt);
-            }
-        });
 
         txtExt1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtExt1.setNextFocusableComponent(txtPhone2);
@@ -792,22 +742,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtFax.setText("xxx-xxx-xxxx");
         txtFax.setToolTipText("");
         txtFax.setNextFocusableComponent(txtEmail);
-        txtFax.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtFaxFocusGained(evt);
-            }
-        });
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtEmail.setNextFocusableComponent(txtBillingName);
 
         txtCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCity.setNextFocusableComponent(txtProv);
-        txtCity.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCityFocusLost(evt);
-            }
-        });
         txtCity.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCityKeyPressed(evt);
@@ -817,19 +757,9 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtPostalCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPostalCode.setText("A1A 1A1");
         txtPostalCode.setNextFocusableComponent(txtContact);
-        txtPostalCode.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPostalCodeFocusGained(evt);
-            }
-        });
 
         txtStreet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtStreet.setNextFocusableComponent(txtUnit);
-        txtStreet.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtStreetFocusLost(evt);
-            }
-        });
         txtStreet.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtStreetKeyPressed(evt);
@@ -904,19 +834,19 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                     .addGroup(pnlCustomerLayout.createSequentialGroup()
                                         .addComponent(lblExt2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblAvailBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCustomerLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(lblAvailBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlCustomerLayout.createSequentialGroup()
-                                        .addComponent(cmbBundles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap())
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCustomerLayout.createSequentialGroup()
-                                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                    .addComponent(cmbBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())))
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
                         .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCustInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1054,68 +984,25 @@ public class ServiceReceipt extends javax.swing.JFrame {
         txtPO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPO.setNextFocusableComponent(btngrpPerService);
 
-        pnlFreq.setBorder(javax.swing.BorderFactory.createTitledBorder("Invoice Frequency:"));
-        pnlFreq.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-
-        btngrpPerService.setSelected(true);
-        btngrpPerService.setText("Per Service Request");
-        btngrpPerService.setNextFocusableComponent(btngrpMonthly);
-        btngrpPerService.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btngrpPerServiceMousePressed(evt);
-            }
-        });
-
-        btngrpMonthly.setText("Net 30");
-        btngrpMonthly.setNextFocusableComponent(rbCheck);
-        btngrpMonthly.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btngrpMonthlyMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlFreqLayout = new javax.swing.GroupLayout(pnlFreq);
-        pnlFreq.setLayout(pnlFreqLayout);
-        pnlFreqLayout.setHorizontalGroup(
-            pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFreqLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(btngrpPerService)
-                .addGap(53, 53, 53)
-                .addComponent(btngrpMonthly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlFreqLayout.setVerticalGroup(
-            pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFreqLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btngrpPerService)
-                    .addComponent(btngrpMonthly))
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(lblPO, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(txtPO, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlFreq, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblPO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPO, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                .addGap(16, 16, 16))
+                .addGap(3, 3, 3))
         );
 
         pnlPayment.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Payment Info:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -1169,7 +1056,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlPaymentLayout.setHorizontalGroup(
             pnlPaymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPaymentLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(35, 35, 35)
                 .addComponent(rbCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbMastercard)
@@ -1178,8 +1065,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rbVisa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbPcard, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addComponent(rbPcard, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
         pnlPaymentLayout.setVerticalGroup(
             pnlPaymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1191,7 +1078,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                     .addComponent(rbOthers)
                     .addComponent(rbVisa)
                     .addComponent(rbPcard))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pnlService.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Service Type:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -1238,13 +1125,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
             }
         });
 
-        rbFollowup.setLabel("Follow-up");
-        rbFollowup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbFollowupActionPerformed(evt);
-            }
-        });
-
         rbOther.setLabel("Other(Preparation,Proofing, OdourControl...) ");
         rbOther.setNextFocusableComponent(rbAM);
         rbOther.addActionListener(new java.awt.event.ActionListener() {
@@ -1269,38 +1149,32 @@ public class ServiceReceipt extends javax.swing.JFrame {
             pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlServiceLayout.createSequentialGroup()
                 .addGap(75, 75, 75)
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbInSuit)
                     .addComponent(rbEmergency, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rbInSuit))
-                .addGap(85, 85, 85)
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbBlock)
-                    .addComponent(rbRegular))
-                .addGap(85, 85, 85)
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbRegular)
                     .addComponent(rbNew)
-                    .addComponent(rbProduct))
-                .addGap(85, 85, 85)
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbOther)
-                    .addComponent(rbFollowup))
+                    .addComponent(rbProduct)
+                    .addComponent(rbOther))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlServiceLayout.setVerticalGroup(
             pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlServiceLayout.createSequentialGroup()
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbBlock)
-                    .addComponent(rbNew)
-                    .addComponent(rbFollowup)
-                    .addComponent(rbInSuit))
-                .addGap(7, 7, 7)
-                .addGroup(pnlServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbEmergency)
-                    .addComponent(rbRegular)
-                    .addComponent(rbProduct)
-                    .addComponent(rbOther))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(rbInSuit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbEmergency)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbBlock)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbRegular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbNew)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbProduct)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbOther))
         );
 
         pnlSchedule.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Schedule:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -1375,9 +1249,9 @@ public class ServiceReceipt extends javax.swing.JFrame {
             .addGroup(pnlScheduleLayout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(pnlPartOfDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
+                .addGap(70, 70, 70)
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         pnlScheduleLayout.setVerticalGroup(
             pnlScheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1387,7 +1261,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addGap(45, 45, 45))
             .addGroup(pnlScheduleLayout.createSequentialGroup()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pnlActions.setEnabled(false);
@@ -1445,27 +1319,73 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        pnlFreq.setBorder(javax.swing.BorderFactory.createTitledBorder("Invoice Frequency:"));
+        pnlFreq.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+
+        btngrpPerService.setSelected(true);
+        btngrpPerService.setText("Per Service Request");
+        btngrpPerService.setNextFocusableComponent(btngrpMonthly);
+        btngrpPerService.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btngrpPerServiceMousePressed(evt);
+            }
+        });
+
+        btngrpMonthly.setText("Net 30");
+        btngrpMonthly.setNextFocusableComponent(rbCheck);
+        btngrpMonthly.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btngrpMonthlyMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlFreqLayout = new javax.swing.GroupLayout(pnlFreq);
+        pnlFreq.setLayout(pnlFreqLayout);
+        pnlFreqLayout.setHorizontalGroup(
+            pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFreqLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(btngrpPerService)
+                .addGap(53, 53, 53)
+                .addComponent(btngrpMonthly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlFreqLayout.setVerticalGroup(
+            pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFreqLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btngrpPerService)
+                    .addComponent(btngrpMonthly))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pnlSchedule, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1178, Short.MAX_VALUE)
-                        .addComponent(pnlService, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1178, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1476,22 +1396,24 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                    .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(pnlFreq, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlService, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlService, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
-    String Freq = "";
-    String ServiceType = "";
-    String Payment = "";
+    String Freq = "Per Service Request";
+    String ServiceType = "In Suit Regular Service Day";
+    String Payment = "Check";
     String strInput = "";
-    String DaySched = "";
+    String DaySched = "Anytime";
     Integer CustID = null;
     Integer BusinessID = null;
     Integer DeptID = null;
@@ -1520,7 +1442,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         bgServType.add(rbBlock);
         bgServType.add(rbNew);
         bgServType.add(rbProduct);
-        bgServType.add(rbFollowup);
         bgServType.add(rbOther);
     }
     private void grpPayment(){
@@ -1579,6 +1500,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (btngrpPerService.isSelected()){
             Freq = btngrpPerService.getText();
+            System.out.println("Freq:" + Freq);
         }
     }//GEN-LAST:event_btngrpPerServiceMousePressed
 
@@ -1628,15 +1550,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
             ServiceType = rbProduct.getText();
         }
     }//GEN-LAST:event_rbProductActionPerformed
-
-    private void rbFollowupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbFollowupActionPerformed
-        if (rbFollowup.isSelected()){
-            ServiceType = rbFollowup.getText();
-            //FollowupDlg followup_dlg = new FollowupDlg();
-            //followup_dlg.init();
-            //followup_dlg.dispose();
-        }
-    }//GEN-LAST:event_rbFollowupActionPerformed
 
     private void rbOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOtherActionPerformed
         if (rbOther.isSelected()){
@@ -1778,7 +1691,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 + " Fax = '" + txtFax.getText() + "',"
                                 + " EmailAddress = '" + txtEmail.getText() + "',"
                                 + " Bundle = '" + bundle + "',"
-                                + " UpdateDate = '" + DateUtils.now() + "',"
+                                + " UpdateDate = '" + DateUtils.now_date_time() + "',"
                                 + " UserID = '" + user_id + "'"
                                 //+ " UserID = '(SELECT User_ID from Users where user_name = '" + frmLogin.user_name + "')'"
                                 + " where cust_id = '" + CustID + "'";
@@ -1883,6 +1796,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             MultipleCustomers.dispose();
                             btnNext.setEnabled(true);
                             btnSave.setEnabled(true);
+                            pnlFreq.requestFocus();
                             break;
                     }
                 }
@@ -2056,160 +1970,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
     private void jCalendar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseClicked
         btnNext.setEnabled(true);
     }//GEN-LAST:event_jCalendar1MouseClicked
-
-    private void txtCustomerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusLost
-        //temporary measure check a field is populated
-        System.out.println("let's see value " + txtCity.toString().isEmpty() + " city");
-        if (!txtCity.toString().isEmpty()){
-        if (CustomerType == "Existing"){
-            //Statement stmt = null;
-            System.out.println("key pressed 1");
-            try {
-                //System.out.println("conn success");
-                System.out.println("stmt ok " + strInput);
-                String sqlStmt = "select count(*) as num from Customer where CustomerName like '%" + strInput + "%'";
-                //String tblName = "Customer";
-                //rs = stmt.executeQuery(sqlStmt);
-                rs = SQLConnection.getRecordSet(sqlStmt);
-                System.out.println("stmt ok");
-                System.out.println("resultset " + sqlStmt);
-                //rs.next();
-                switch (rs.getInt("num")){
-                    case 0:
-                        JOptionPane.showMessageDialog(null,"There is no customer which have the Name containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
-                        break;
-                    case 1:
-                        sqlStmt = "select * from Customer where CustomerName like '%" + strInput + "%'";
-                        //tblName = "Customer";
-                        rs = SQLConnection.getRecordSet(sqlStmt);
-                        //rs.next();
-                        fillInfo(rs);
-                        btnNext.setEnabled(true);
-                        btnSave.setEnabled(true);
-                        break;
-                    default:
-                        System.out.println("multiple records");
-                        sqlStmt = "select CustomerName, Address from Customer where CustomerName like '%" + strInput + "%'";
-                        //String tblName = "Customer";
-                        rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
-                        MultipleRecords MultipleCustomers = new MultipleRecords();
-                        MultipleCustomers.init();
-                        MultipleCustomers.dispose();
-                        btnNext.setEnabled(true);
-                        btnSave.setEnabled(true);
-                        break;
-                }
-            }
-                catch (SQLException ex) {
-                Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
-                //if (stmt != null) { stmt.close(); }
-                System.out.println("error");
-            }    
-        }
-        else{
-            System.out.println("new customer " );
-            //check the name to be at least 5 characters
-            if (txtCustomer.getText().length() >= 5){
-                for (Component cp : pnlCustomer.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                pnlCustomer.setEnabled(true);
-                txtBillingName.setEnabled(true);
-                btnSave.setEnabled(true);
-                btnNext.setEnabled(true);
-                txtCustInfo.requestFocus();
-
-
-                /*
-                txtCustInfo.setEnabled(true);
-                txtStreet.setEnabled(true);
-                txtUnit.setEnabled(true);
-                txtStreetInfo.setEnabled(true);
-                txtCity.setEnabled(true);
-                txtProv.setEnabled(true);
-                txtPostalCode.setEnabled(true);
-                */
-            }
-            else{
-                JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
-                txtCustomer.requestFocus();
-            }
-        }
-        }
-    }//GEN-LAST:event_txtCustomerFocusLost
-
-    private void txtStreetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStreetFocusLost
-        if (txtStreet.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Street is a mandatory field","Street is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtStreet.requestFocus();
-        }
-    }//GEN-LAST:event_txtStreetFocusLost
-
-    private void txtCityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCityFocusLost
-        if (txtCity.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtCity.requestFocus();
-        }
-    }//GEN-LAST:event_txtCityFocusLost
-
-    private void txtPostalCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPostalCodeFocusGained
-        txtPostalCode.selectAll();
-    }//GEN-LAST:event_txtPostalCodeFocusGained
-
-    private void txtPhone1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone1FocusGained
-        txtPhone1.selectAll();
-    }//GEN-LAST:event_txtPhone1FocusGained
-
-    private void txtPhone2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone2FocusGained
-        txtPhone2.selectAll();
-    }//GEN-LAST:event_txtPhone2FocusGained
-
-    private void txtFaxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFaxFocusGained
-        txtFax.selectAll();
-    }//GEN-LAST:event_txtFaxFocusGained
-
-    private void txtBillingNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingNameFocusLost
-        if (txtBillingName.getText().length() == 0){
-                for (Component cp : pnlFreq.getComponents() ){
-                    cp.setEnabled(true);
-                    pnlFreq.requestFocus();
-                }
-                for (Component cp : pnlPayment.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                for (Component cp : pnlService.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                for (Component cp : pnlSchedule.getComponents() ){
-                    cp.setEnabled(true);
-                }
-            }
-            else if (txtBillingName.getText().length() > 3) {
-                for (Component cp : pnlBillingCustomer.getComponents() ){
-                    cp.setEnabled(true);
-                    txtPO.setEnabled(true);
-                    txtBillingAlias.requestFocus();
-                }
-                for (Component cp : pnlFreq.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                for (Component cp : pnlPayment.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                for (Component cp : pnlService.getComponents() ){
-                    cp.setEnabled(true);
-                }
-                for (Component cp : pnlSchedule.getComponents() ){
-                    cp.setEnabled(true);
-                }
-            }
-            else{
-                JOptionPane.showMessageDialog(null,"Billing Name is less than 4 characters","Billing Name too short!!!",JOptionPane.ERROR_MESSAGE);
-                txtBillingName.requestFocus();
-            }
-            
-    }//GEN-LAST:event_txtBillingNameFocusLost
-
+/**/
     private void txtBillingNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingNameKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             if (txtBillingName.getText().length() == 0){
@@ -2251,44 +2012,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtBillingNameKeyPressed
-
-    private void txtBillingPostalCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPostalCodeFocusGained
-        txtBillingPostalCode.selectAll();
-    }//GEN-LAST:event_txtBillingPostalCodeFocusGained
-
-    private void txtBillingPhone1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone1FocusGained
-        txtBillingPhone1.selectAll();
-    }//GEN-LAST:event_txtBillingPhone1FocusGained
-
-    private void txtBillingPhone2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone2FocusGained
-        txtBillingPhone2.selectAll();
-    }//GEN-LAST:event_txtBillingPhone2FocusGained
-
-    private void txtBillingFaxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingFaxFocusGained
-        txtBillingFax.selectAll();
-    }//GEN-LAST:event_txtBillingFaxFocusGained
-
-    private void txtBillingStreetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingStreetFocusLost
-        if (txtBillingStreet.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Billing Street is a mandatory field","Street is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtBillingStreet.requestFocus();
-        }
-    }//GEN-LAST:event_txtBillingStreetFocusLost
-
-    private void txtBillingCityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingCityFocusLost
-        if (txtBillingCity.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Billing City is a mandatory field","City is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtBillingCity.requestFocus();
-        }
-    }//GEN-LAST:event_txtBillingCityFocusLost
-
-    private void txtBillingPhone1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBillingPhone1FocusLost
-        if (txtBillingPhone1.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Billing Phone is a mandatory field","Phone is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtBillingPhone1.requestFocus();
-        }
-    }//GEN-LAST:event_txtBillingPhone1FocusLost
-
+/**/
     private void txtBillingStreetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillingStreetKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             if (txtBillingStreet.getText().length() <= 5){
@@ -2318,14 +2042,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtBillingPhone1KeyPressed
-
-    private void txtPhone1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhone1FocusLost
-        if (txtPhone1.getText().isEmpty() && txtPhone1.getText() != "xxx-xxx-xxxx" && txtPhone1.getText().length() != 12){
-            JOptionPane.showMessageDialog(null,"Phone is a mandatory field","Phone is Mandatory!!",JOptionPane.ERROR_MESSAGE);
-            txtPhone1.requestFocus();
-        }
-    }//GEN-LAST:event_txtPhone1FocusLost
-    
+/*  */  
     public class MultipleRecords extends JFrame implements ActionListener{
         JLabel Lbl = new JLabel("These customers match the search criteria. Please select one:");
         JPanel AskPanel = new JPanel();
@@ -2493,14 +2210,15 @@ public class ServiceReceipt extends javax.swing.JFrame {
             stmt.setString(7,ServiceType);
             stmt.setString(8,Payment);
             stmt.setString(9,DaySched);
-            stmt.setString(10,jCalendar1.getCalendar().getTime().toString());
-            stmt.setString(11,DateUtils.now());
-            stmt.setString(12,DateUtils.now());
+            //stmt.setString(10,jCalendar1.getCalendar().getTime().toString());
+            stmt.setString(10,DateUtils.Calendar_date(jCalendar1.getDate()));
+            stmt.setString(11,DateUtils.now_date_time());
+            stmt.setString(12,DateUtils.now_date_time());
             stmt.setInt(13,frmLogin.user_id);        
             stmt.setInt(14,0);
             System.out.println("CustID:" + CustID + ";BusinessID:" + BusinessID + ";DeptID:" + DeptID + ";PO:" + txtPO.getText().toString() + ";Freq:" 
                     + Freq + ";ServiceType:" + ServiceType + ";Payment:" + Payment + ";DaySched:" + DaySched + ";Calendar:" 
-                    + jCalendar1.getCalendar().getTime().toString() + ";Creation_date:" + DateUtils.now() + ";Update_date:" + DateUtils.now() 
+                    + DateUtils.Calendar_date(jCalendar1.getDate()) + ";Creation_date:" + DateUtils.now_date_time() + ";Update_date:" + DateUtils.now_date_time() 
                     + ";user_id:" + frmLogin.user_id);
             
             //stmt.executeUpdate();   
@@ -2524,6 +2242,21 @@ public class ServiceReceipt extends javax.swing.JFrame {
         //my_string = (field_value == null) ? "": field_value.toString();
         return (field_value == null) ? "": field_value;//.toString();
         //return my_string;
+    }
+    
+    public void allow_vk_tab(){
+        //@see JTable constructor
+    Set<KeyStroke> forwardKeys = new HashSet<KeyStroke>(1);
+    forwardKeys.add(KeyStroke.getKeyStroke(
+        KeyEvent.VK_TAB, InputEvent.CTRL_MASK));
+    setFocusTraversalKeys(
+        KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardKeys);
+
+    Set<KeyStroke> backwardKeys = new HashSet<KeyStroke>(1);
+    backwardKeys.add(KeyStroke.getKeyStroke(
+        KeyEvent.VK_TAB, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
+    setFocusTraversalKeys(
+        KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backwardKeys);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnCancel;
@@ -2585,7 +2318,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbBlock;
     private javax.swing.JRadioButton rbCheck;
     private javax.swing.JRadioButton rbEmergency;
-    private javax.swing.JRadioButton rbFollowup;
     private javax.swing.JRadioButton rbInSuit;
     private javax.swing.JRadioButton rbMastercard;
     private javax.swing.JRadioButton rbNew;

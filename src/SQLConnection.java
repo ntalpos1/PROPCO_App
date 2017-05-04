@@ -21,9 +21,9 @@ public class SQLConnection {
             Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
         }
         try{
-            //conn = DriverManager.getConnection("jdbc:mysql://192.168.1.122/PROPCO_test","dan","Zackmera");
-            //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140/PROPCO_test","dan","Zackmera");
-            conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
+            //conn = DriverManager.getConnection("jdbc:mysql://192.168.1.123/PROPCO_test","dan","Zackmera");
+            conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140/PROPCO_test","dan","Zackmera");
+            //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
             stmt = conn.createStatement();
             //pst = conn.prepareStatement("");
             System.out.println("establishConnection statement created");
@@ -132,9 +132,11 @@ public class SQLConnection {
     connectionProps.put("user", "dan");
     connectionProps.put("password", "Mexico1970");
     connectionProps.put("serverName","192.168.0.140");
+    //connectionProps.put("serverName","192.168.1.123");
     //connectionProps.put("portNumber","");
     
-    conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140", connectionProps); 
+    //conn = DriverManager.getConnection("jdbc:mysql://192.168.1.123", connectionProps); 
+    conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140", connectionProps);
             //+ ":" + this.portNumber + "/",                   connectionProps);
     
     System.out.println("Connected to database");

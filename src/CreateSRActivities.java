@@ -644,8 +644,8 @@ public class CreateSRActivities extends JFrame {
                     System.out.println("PestsID=" + PestsID);
                     stmt.setInt(6, PestsID);
                     stmt.setString(7,"I");//I-Initial,S-Sent,R-Received,C-completed,X-Cancelled
-                    stmt.setString(8,DateUtils.now());
-                    stmt.setString(9,DateUtils.now());
+                    stmt.setString(8,DateUtils.now_date_time());
+                    stmt.setString(9,DateUtils.now_date_time());
                     stmt.setInt(10,frmLogin.user_id);
                     
                     stmt.addBatch();

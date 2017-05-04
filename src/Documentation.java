@@ -48,7 +48,7 @@ public class Documentation extends javax.swing.JFrame {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(380, 750));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 750));
 
-        jTreeDocumentation.setModel(new FileSystemModel(new File("/home/dan")));
+        jTreeDocumentation.setModel(new FileSystemModel(new File("C:/")));
         jTreeDocumentation.setMaximumSize(new java.awt.Dimension(800, 600));
         jTreeDocumentation.setMinimumSize(new java.awt.Dimension(800, 600));
         jTreeDocumentation.setPreferredSize(new java.awt.Dimension(800, 600));

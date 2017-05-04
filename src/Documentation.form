@@ -103,7 +103,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTreeDocumentationMouseClicked"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTreeDocumentation.setModel(new FileSystemModel(new File(&quot;/home/dan&quot;)));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTreeDocumentation.setModel(new FileSystemModel(new File(&quot;C:/&quot;)));"/>
           </AuxValues>
         </Component>
       </SubComponents>
