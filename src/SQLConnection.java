@@ -22,8 +22,8 @@ public class SQLConnection {
         }
         try{
             //conn = DriverManager.getConnection("jdbc:mysql://192.168.1.123/PROPCO_test","dan","Zackmera");
-            conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140/PROPCO_test","dan","Zackmera");
-            //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
+            //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140/PROPCO_test","dan","Zackmera");
+            conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
             stmt = conn.createStatement();
             //pst = conn.prepareStatement("");
             System.out.println("establishConnection statement created");
@@ -45,6 +45,23 @@ public class SQLConnection {
             System.out.println("error");      
             }
         return rs;
+    }
+    
+    public static String return_value(String sqlStmt,String return_field){
+    System.out.println("getRecordSet " + sqlStmt);
+        ResultSet rs = null;
+        String my_value="";
+        try {
+            rs = stmt.executeQuery(sqlStmt);
+            rs.next();
+            my_value = rs.getString(return_field);
+        }
+        catch(SQLException ex) {
+            Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
+            //if (stmt != null) { stmt.close(); }
+            System.out.println("error");      
+            }
+        return my_value;
     }
     
     public static ResultSet getMultipleRecordsRS(String sqlStmt){

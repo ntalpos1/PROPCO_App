@@ -85,7 +85,7 @@ public class CreateSRActivities extends JFrame {
         pnlTable.setLayout(new BorderLayout());
         
         columnNames = new String[] {"WO#","UNIT/AREA","Notes","PEST TYPE"};
-        dataValues=new Object[][] {{"","","",""},{"","","",""},{"","","",""},{"","","",""},{"","","",""},};
+        dataValues=new Object[][] {{"","","","Select PESTS"},{"","","","Select PESTS"},{"","","","Select PESTS"},{"","","","Select PESTS"},{"","","","Select PESTS"},};
         
         myTableModel model=new myTableModel();
         table.setRowHeight(30);
@@ -294,6 +294,40 @@ public class CreateSRActivities extends JFrame {
     
     private void btnCompleteReqActionPerformed(java.awt.event.ActionEvent evt) {
         //save all table records in the db
+        //create an array in case is needed for followups
+        String activities[][] = null;
+        
+        //if(! Unit.isEmpty())        
+        int rows_count = table.getRowCount();
+        //activities = new String[rows_count];
+        String PestsID = "";
+        activities = new String [rows_count][10];
+        for(int row = 0; row<rows_count; row++){
+            
+            for(int j=0;j<6;j++){
+                activities[row][j] = ServiceReceipt.ServiceReqNr;
+                Integer ActivityNr = row+1;
+                activities[row][j] = ActivityNr.toString();
+                activities[row][j] = (String)avoid_null(table.getValueAt(row,0));
+                activities[row][j] = (String)avoid_null(table.getValueAt(row, 1));
+                activities[row][j] = (String)avoid_null(table.getValueAt(row, 2));
+                //try{
+                //to change to return the value 
+                String return_field = "PestsID"; 
+                String sqlStmt = "Select " + return_field + "from Pests WHERE PestsType = '" + (String)avoid_null(table.getValueAt(row, 3)) + "'";
+                PestsID = SQLConnection.return_value(sqlStmt,return_field);
+                //PestsID = rs.getInt("PestsID");
+                System.out.println("PestsID=" + PestsID);
+                
+                activities[row][j] = PestsID.toString();
+                activities[row][j] = "I";
+                activities[row][j] = DateUtils.now_date_time();
+                activities[row][j] = DateUtils.now_date_time();
+                activities[row][j] = frmLogin.user_id.toString();        
+            }
+        }
+        String Table_Fields = "(ServiceReqNr,ActivityNr,WONr,Unit,Notes,PestsID,ActivityStatus,Creation_Date,Update_Date,User_id)";
+        String stmt_Values = "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         insert_activities();
         FollowupDlg followup_dlg = new FollowupDlg();
         followup_dlg.init();

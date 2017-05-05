@@ -497,7 +497,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(txtBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                 .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -809,12 +809,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
-                        .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlCustomerLayout.createSequentialGroup()
                         .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtPhone2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
@@ -845,37 +839,43 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())))
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
                         .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCustInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCustomerLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCustomerLayout.createSequentialGroup()
-                                .addComponent(lblProv)
+                            .addGroup(pnlCustomerLayout.createSequentialGroup()
+                                .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)
-                                .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(lblPostalCode)
-                                .addGap(4, 4, 4)
-                                .addComponent(txtPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCustInfo)
+                            .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(pnlCustomerLayout.createSequentialGroup()
+                                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblProv)
+                                    .addGap(1, 1, 1)
+                                    .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(6, 6, 6)
+                                    .addComponent(lblPostalCode)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(3, 3, 3))))
         );
 
-        pnlCustomerLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtContact, txtCustInfo, txtCustomer, txtStreetInfo});
+        pnlCustomerLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtContact, txtCustomer, txtStreetInfo});
 
         pnlCustomerLayout.setVerticalGroup(
             pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCustomerLayout.createSequentialGroup()
-                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCustInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -958,16 +958,16 @@ public class ServiceReceipt extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addGap(79, 79, 79))
         );
         pnlInfoLayout.setVerticalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
+                    .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE))
                 .addGap(0, 4, Short.MAX_VALUE))
         );
 
@@ -1078,7 +1078,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                     .addComponent(rbOthers)
                     .addComponent(rbVisa)
                     .addComponent(rbPcard))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pnlService.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Service Type:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -1174,7 +1174,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbProduct)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbOther))
+                .addComponent(rbOther)
+                .addContainerGap())
         );
 
         pnlSchedule.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Schedule:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -1251,7 +1252,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addComponent(pnlPartOfDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlScheduleLayout.setVerticalGroup(
             pnlScheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1365,19 +1366,21 @@ public class ServiceReceipt extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1399,12 +1402,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
                     .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                     .addComponent(pnlFreq, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlService, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -1419,6 +1422,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
     Integer DeptID = null;
     public static String ServiceReqNr = null;
     String FollowupCnt = "";
+    String[] Fields_value_arr=null;
     
     public static String CustomerType = "";
     public static String BID = "";
@@ -1672,9 +1676,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         }
                         
                         //get user_id
-                        sqlStmt = "SELECT User_ID from Users where user_name = '" + frmLogin.user_name + "'";
-                        rs = SQLConnection.getRecordSet(sqlStmt);
-                        Integer user_id = rs.getInt("User_ID");
+                        String return_field = "User_ID"; 
+                        String sqlStmt = "Select " + return_field + " from Users where user_name = '" + frmLogin.user_name + "'";
+                        Integer user_id = Integer.getInteger(SQLConnection.return_value(sqlStmt,return_field));
+                        //rs = SQLConnection.getRecordSet(sqlStmt);
+                        
+                        //Integer user_id = rs.getInt("User_ID");
                         sqlStmt = "UPDATE Customer SET CustomerName = '" + txtCustomer.getText() + "'," 
                                 + " Notes = '" + txtCustInfo.getText() + "',"
                                 + " Address = '" + txtStreet.getText() + "',"
@@ -1858,6 +1865,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             //rs.next();
                             fillInfo(rs);
+                            System.out.println("after fillinfo");
                             btnNext.setEnabled(true);
                             btnSave.setEnabled(true);
                             break;
@@ -1914,8 +1922,36 @@ public class ServiceReceipt extends javax.swing.JFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         //we create the servicerequest and fill info in the Service_Request table
-        create_service_request();
-        //System.out.println("date is: " + jCalendar1.getCalendar().getTime().toString());
+        String Table_Fields = "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount)";
+        String stmt_Values = "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        Fields_value_arr = new String[13];
+        Fields_value_arr[0] = CustID.toString();
+        Fields_value_arr[1] = BusinessID.toString();
+        DeptID = 0;
+        if (!txtBillingDept.getText().isEmpty()){
+            System.out.println("DeptID=" + DeptID);
+            String return_field = "DeptID"; 
+            String sqlStmt = "Select " + return_field + " from Department WHERE DeptName = '" + txtBillingDept.getText() + "'";
+            DeptID = Integer.getInteger(SQLConnection.return_value(sqlStmt,return_field));
+            System.out.println("DeptID=" + DeptID);
+        }
+        Fields_value_arr[2] = DeptID.toString();
+        Fields_value_arr[3] = avoid_null(txtPO.getText()).toString();       
+        Fields_value_arr[4] = Freq;
+        Fields_value_arr[5] = ServiceType;
+        Fields_value_arr[6] = Payment;
+        Fields_value_arr[7] = DaySched;
+        Fields_value_arr[8] = DateUtils.Calendar_date(jCalendar1.getDate());
+        Fields_value_arr[9] = DateUtils.now_date_time();
+        Fields_value_arr[10] = DateUtils.now_date_time();
+        Fields_value_arr[11] = frmLogin.user_id.toString();
+        Fields_value_arr[12] = "0";
+        
+        create_service_request(Table_Fields,stmt_Values, Fields_value_arr);
+        String return_field = "ServiceReqNr"; 
+        String sqlStmt = "Select " + return_field + " from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
+        ServiceReqNr = SQLConnection.return_value(sqlStmt,return_field);
         
         CreateSRActivities SRActivities = new CreateSRActivities();
         SRActivities.setSize(800,600);
@@ -2124,7 +2160,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             cbBundle.setSelected(false);
             System.out.println("bundle value:" + rs.getString("Bundle") + "");
             if ( rs.getString("Bundle").length() >0){
-                System.out.println("bundle value: " + rs.getString("Bundle"));
+                System.out.println("bundle value non-empty: " + rs.getString("Bundle"));
                 cbBundle.setSelected(true);
                 //cbBundle.setEnabled(true);
                 strBundleValue = rs.getString("Bundle");
@@ -2175,12 +2211,58 @@ public class ServiceReceipt extends javax.swing.JFrame {
         
     }
     
+    public String create_service_request(String Table_Fields, String stmt_Values, String[] Fields_Value_arr){
+                
+        
+        
+        try{
+            sqlStmt = "INSERT INTO Service_Request " + Table_Fields + " VALUES " + stmt_Values + ";";
+            //sqlStmt = "INSERT INTO Service_Request "
+            //                       + "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
+            //                       + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            System.out.println(sqlStmt);
+            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
+            stmt.setInt(1, Integer.parseInt(Fields_Value_arr[0]));
+            stmt.setInt(2, Integer.parseInt(Fields_Value_arr[1]));
+            stmt.setInt(3, Integer.parseInt(Fields_Value_arr[2]));
+            stmt.setString(4, Fields_Value_arr[3]);
+            stmt.setString(5, Fields_Value_arr[4]);
+            stmt.setString(6, Fields_Value_arr[5]);
+            stmt.setString(7, Fields_Value_arr[6]);
+            stmt.setString(8, Fields_Value_arr[7]);
+            stmt.setString(9, Fields_Value_arr[8]);
+            stmt.setString(10, Fields_Value_arr[9]);
+            stmt.setString(11, Fields_Value_arr[10]);
+            stmt.setInt(12, Integer.parseInt(Fields_Value_arr[11]));
+            stmt.setInt(13, Integer.parseInt(Fields_Value_arr[12]));
+            
+            System.out.println("CustID:" +  Integer.parseInt(Fields_Value_arr[0]) 
+                    + ";BusinessID:" + Integer.parseInt(Fields_Value_arr[1])
+                    + ";DeptID:" + Integer.parseInt(Fields_Value_arr[2])
+                    + ";PO:" + Fields_Value_arr[3]  + ";Freq:" + Fields_Value_arr[4]
+                    + ";ServiceType:" + Fields_Value_arr[5] 
+                    + ";Payment:" + Fields_Value_arr[6] 
+                    + ";DaySched:" + Fields_Value_arr[7] 
+                    + ";Calendar:" + Fields_Value_arr[8]
+                    + ";Creation_date:" + Fields_Value_arr[9] 
+                    + ";Update_date:" + Fields_Value_arr[10] 
+                    + ";user_id:" + Integer.parseInt(Fields_Value_arr[11])
+                    + ";count:" +Integer.parseInt(Fields_Value_arr[12]));
+            
+            stmt.executeUpdate();   
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+        return ServiceReqNr;
+    }
+    /*
     public void create_service_request(){
         try{
             
             sqlStmt = "INSERT INTO Service_Request "
-                                   + "(Cust_id,BID,DeptID,PONr,Invoicing,Emergency,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
-                                   + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                   + "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
+                                   + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             System.out.println(sqlStmt);
             PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
             //Integer ServiceReqNr generated by the db
@@ -2198,54 +2280,42 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 DeptID = 0;
                 stmt.setInt(3,DeptID);
             }
-            stmt.setString(4, txtPO.getText().toString());
-            
+            stmt.setString(4, avoid_null(txtPO.getText()).toString());
             stmt.setString(5,Freq);
-            if (ServiceType == "Emergency Service"){
-                stmt.setString(6,"1");
-            }
-            else{
-                stmt.setString(6,"0");
-            }
-            stmt.setString(7,ServiceType);
-            stmt.setString(8,Payment);
-            stmt.setString(9,DaySched);
-            //stmt.setString(10,jCalendar1.getCalendar().getTime().toString());
-            stmt.setString(10,DateUtils.Calendar_date(jCalendar1.getDate()));
+            stmt.setString(6,ServiceType);
+            stmt.setString(7,Payment);
+            stmt.setString(8,DaySched);
+            stmt.setString(9,DateUtils.Calendar_date(jCalendar1.getDate()));
+            stmt.setString(10,DateUtils.now_date_time());
             stmt.setString(11,DateUtils.now_date_time());
-            stmt.setString(12,DateUtils.now_date_time());
-            stmt.setInt(13,frmLogin.user_id);        
-            stmt.setInt(14,0);
+            stmt.setInt(12,frmLogin.user_id);        
+            stmt.setInt(13,0);
             System.out.println("CustID:" + CustID + ";BusinessID:" + BusinessID + ";DeptID:" + DeptID + ";PO:" + txtPO.getText().toString() + ";Freq:" 
                     + Freq + ";ServiceType:" + ServiceType + ";Payment:" + Payment + ";DaySched:" + DaySched + ";Calendar:" 
                     + DateUtils.Calendar_date(jCalendar1.getDate()) + ";Creation_date:" + DateUtils.now_date_time() + ";Update_date:" + DateUtils.now_date_time() 
                     + ";user_id:" + frmLogin.user_id);
             
-            //stmt.executeUpdate();   
+            stmt.executeUpdate();   
 
             //SQLConnection.conn.commit();
             //need to retrieve ServiceReqNr
-            String sqlStmt1 = "Select ServiceReqNr from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
-            //rs = SQLConnection.getRecordSet(sqlStmt);
+            sqlStmt = "Select ServiceReqNr from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
+            rs = SQLConnection.getRecordSet(sqlStmt);
             System.out.println("ServiceReqNr is: " + rs.getInt("ServiceReqNr"));
-            //ServiceReqNr = rs.getString("ServiceReqNr");
+            ServiceReqNr = rs.getString("ServiceReqNr");
             
         }
         catch(Exception e){
-            //error to be captured!!!!
-            //JOptionPane.showMessageDialog(this,e.getMessage());
+            JOptionPane.showMessageDialog(this,e.getMessage());
         }
     }
-    
+    */
     public Object avoid_null(Object field_value){
-        //String my_string;
-        //my_string = (field_value == null) ? "": field_value.toString();
-        return (field_value == null) ? "": field_value;//.toString();
-        //return my_string;
+        return (field_value == null) ? "": field_value;
     }
     
     public void allow_vk_tab(){
-        //@see JTable constructor
+    //@see JTable constructor
     Set<KeyStroke> forwardKeys = new HashSet<KeyStroke>(1);
     forwardKeys.add(KeyStroke.getKeyStroke(
         KeyEvent.VK_TAB, InputEvent.CTRL_MASK));
