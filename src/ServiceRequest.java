@@ -1,4 +1,6 @@
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /*
@@ -51,6 +53,25 @@ public class ServiceRequest {
         this.CreationDate = DateUtils.now_date_time();
         this.UpdateDate = DateUtils.now_date_time();
     }
+    
+    public int SelectService_Request_Table(){
+        //need to retrieve ServiceReqNr
+        String sqlStmt = null;
+        ResultSet rs = null;
+        int my_value = 0;
+        sqlStmt = "Select ServiceReqNr from Service_Request WHERE User_id='" 
+                + this.user_id + "' AND ActivityCount = 0";
+        try{
+            rs = SQLConnection.getRecordSet(sqlStmt);
+            System.out.println("ServiceReqNr is: " + rs.getInt("ServiceReqNr"));
+            my_value = rs.getInt("ServiceReqNr");
+        }
+        catch(SQLException ex){
+            
+        }
+        return my_value;
+    }
+    
     public void LoadArray(){
         Object[] my_array = new Object[12];
         my_array[0] = this.ServReqNr;

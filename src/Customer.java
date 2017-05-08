@@ -1,4 +1,5 @@
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -30,6 +31,7 @@ public class Customer  {
     String Ext2;
     String Fax;
     String Email;
+    int BID;
     Boolean Bundle;
     String BundleName;
     String Department;
@@ -37,7 +39,7 @@ public class Customer  {
     int userID;
     
     public Customer(){
-        this(0,"","","","","","","","","","","","","","","","","",0);
+        this(0,"","","","","","","","","","","","","","","",0,"","",0);
     }
     
     public Customer(ResultSet rs){
@@ -61,6 +63,7 @@ public class Customer  {
             this.Bundle = false;
             this.BundleName = rs.getString("BundleName");
             if (!this.BundleName.isEmpty()) {this.Bundle = true;}
+            this.BID = rs.getInt("BID");
             this.Department = rs.getString("DepartmentName");
             this.ContractNr = rs.getString("ContractNr");
             this.userID = rs.getInt("UID");
@@ -72,7 +75,7 @@ public class Customer  {
         }
     }
     
-    public Customer(int CustID,String Name,String Notes1,String Street,String ExtraInfo, String CityName, String Prov, String PC, String Contact,String Ph1,String Ext1,String Ph2,String ext2,String fax, String email,String bundlename,String DeptName,String ContrNr,int userID){
+    public Customer(int CustID,String Name,String Notes1,String Street,String ExtraInfo, String CityName, String Prov, String PC, String Contact,String Ph1,String Ext1,String Ph2,String ext2,String fax, String email,String bundlename,int BID,String DeptName,String ContrNr,int userID){
         this.CustID = CustID;
         this.CustName = Name;
         this.Notes = Notes1;
@@ -92,16 +95,133 @@ public class Customer  {
            this.Bundle = false; 
         }
         this.BundleName = bundlename;
+        this.BID = BID;
         this.Department = DeptName;
         this.ContractNr = ContrNr;
         this.userID = userID;
     }
     
+    public int SelectBundlesTable(){
+        String sqlStmt = null;
+        ResultSet rs = null;
+        int my_val = 0;
+        try{
+        sqlStmt = "SELECT count(*) as num from Bundles where BundleName = '" 
+                + this.BundleName
+                + "' and BID = '" + this.BID + "'";
+        rs = SQLConnection.getRecordSet(sqlStmt);
+        my_val = rs.getInt("num");
+        }
+        catch(SQLException ex){
+            
+        }
+        return my_val;
+        //System.out.println("count is: " + rs.getInt("num"));
+    }
+    
+    public int SelectCountCustomerTable(String strInput){
+        ResultSet rs = null;
+        int my_value = 0;
+        String sqlStmt = "select count(*) as num from Customer where CustomerName like '%" + strInput + "%'";
+        //String tblName = "Customer";
+        //rs = stmt.executeQuery(sqlStmt);
+        try{
+            rs = SQLConnection.getRecordSet(sqlStmt);
+            my_value = rs.getInt("num");
+        }
+        catch(SQLException ex){
+            
+        }
+        return my_value;
+    }
+    public void InsertBundlesTable(){
+        String sqlStmt = null;
+        sqlStmt = "INSERT INTO Bundles (BID,BundleName) VALUES (?,?)";
+        System.out.println(sqlStmt);
+        try{
+            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
+            //"insert into Bundles (BID, BundleName) values (?, ?)");
+            //System.out.println("insert into Bundles (BID, BundleName) values (?, ?)");
+            stmt.setInt(1, this.BID);
+            System.out.println("1");
+            stmt.setString(2, this.BundleName);
+            System.out.println("2");
+            stmt.executeUpdate();
+        }
+        catch(SQLException ex){
+            
+        }
+    }                            
+                                
+    public void UpdateCustomerTable() {
+        //String sql = "INSERT INTO ACTIVITY(activityId, serviceReqNr, activityNr, wo, location, notes, pestID, status, creationDate, updateDate, userId) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        //Connection conn = null;
+        //PreparedStatement pstmt = null;
+        //try {
+            //conn = this.connect();
+            String sqlStmt = null;
+            sqlStmt = "UPDATE Customer SET CustomerName = '" + this.CustName + "'," 
+                    + " Notes = '" + this.Notes + "',"
+                    + " Address = '" + this.Address + "',"
+                    + " AddressNotes = '" + this.AddressNotes + "',"
+                    + " City = '" + this.City + "',"
+                    + " Province = '" + this.Province + "',"
+                    + " PostalCode = '" + this.PostalCode + "',"
+                    + " ContactName = '" + this.ContactName + "',"
+                    + " PrimaryPhone = '" + this.Phone1 + "',"
+                    + " Ext = '" + this.Ext + "',"
+                    + " SecondaryPhone = '" + this.Phone2 + "',"
+                    + " Ext2 = '" + this.Ext2 + "',"
+                    + " Fax = '" + this.Fax + "',"
+                    + " EmailAddress = '" + this.Email + "',"
+                    + " BundleName = '" + this.Bundle + "',"
+                    + " DepartmentName = '" + this.Department + "',"
+                    + " ContractNr = '" + this.ContractNr + "',"
+                    + " UpdateDate = '" + DateUtils.now_date_time() + "',"
+                    + " UID = '" + this.userID + "'"
+                    + " where CID = '" + this.CustID + "'";
+
+            System.out.println(sqlStmt);
+            int updateCust = SQLConnection.updateRecordSet(sqlStmt);
+        
+        
+        /*
+        pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, this.activityId);
+            pstmt.setDouble(2, this.serviceReqNr);
+            //si asa si celelalte....
+            
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally{
+            try {
+if(pstmt != null) pstmt.close();
+} catch (SQLException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+            try {
+if(conn != null)conn.close();
+} catch (SQLException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+        } */
+    }
     public int getCustID(){
         return CustID;
     }
     public void setCustID(int value){
         CustID = value;
+    }
+    public int getBID(){
+        return BID;
+    }
+    public void setBID(int value){
+        BID = value;
     }
     public String getCustName(){
         return CustName;

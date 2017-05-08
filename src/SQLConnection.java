@@ -23,7 +23,9 @@ public class SQLConnection {
         try{
             //conn = DriverManager.getConnection("jdbc:mysql://192.168.1.123/PROPCO_test","dan","Zackmera");
             //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.140/PROPCO_test","dan","Zackmera");
-            conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
+            //conn = DriverManager.getConnection("jdbc:mysql://192.168.0.21/PROPCO_test","dan","Zackmera");
+            //conn = DriverManager.getConnection("jdbc:mysql://10.52.0.38/PROPCO_test","dan","Zackmera");
+            conn = DriverManager.getConnection("jdbc:mysql://192.168.1.120/PROPCO_test","dan","Zackmera");
             stmt = conn.createStatement();
             //pst = conn.prepareStatement("");
             System.out.println("establishConnection statement created");
