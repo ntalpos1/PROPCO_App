@@ -38,6 +38,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      <Component id="pnlTitle" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="pnlInfo" alignment="0" min="-2" pref="1197" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
@@ -45,30 +50,26 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="pnlFreq" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="pnlService" pref="670" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="pnlPayment" pref="0" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pnlService" pref="638" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pnlPayment" min="-2" pref="532" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="pnlSchedule" pref="524" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                      <Component id="pnlTitle" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="pnlInfo" alignment="0" min="-2" pref="1197" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnlActions" min="-2" pref="1188" max="-2" attributes="0"/>
+                      <Component id="pnlActions" min="-2" pref="1168" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,14 +83,14 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="pnlDetails" max="32767" attributes="0"/>
                   <Component id="pnlPayment" pref="72" max="32767" attributes="0"/>
-                  <Component id="pnlFreq" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlFreq" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="pnlService" pref="183" max="32767" attributes="0"/>
                   <Component id="pnlSchedule" pref="183" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="pnlActions" min="-2" pref="46" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -138,10 +139,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="pnlCustomer" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="pnlBillingCustomer" min="-2" pref="520" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                  <Component id="pnlCustomer" min="-2" pref="648" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="pnlBillingCustomer" min="-2" pref="528" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,7 +151,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="pnlCustomer" max="32767" attributes="0"/>
-                      <Component id="pnlBillingCustomer" pref="299" max="32767" attributes="0"/>
+                      <Component id="pnlBillingCustomer" pref="311" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
               </Group>
@@ -185,87 +186,90 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblBillingName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingAlias" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingStreet" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingCity" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingContact" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingPhone1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBillingPhone2" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtBillingPhone2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="lblBillingExt2" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtBillingPhone1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblBillingExt1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblBillingContract" max="32767" attributes="0"/>
+                                  <Component id="lblBillingDept" pref="101" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtBillingContract" pref="194" max="32767" attributes="0"/>
+                                  <Component id="txtBillingDept" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnDocumentation" min="-2" pref="136" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblBillingName" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingAlias" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingStreet" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingCity" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingContact" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingPhone1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblBillingPhone2" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtBillingExt2" min="-2" pref="55" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lblBillingEmail" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="txtBillingPhone2" min="-2" pref="89" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="lblBillingExt2" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="txtBillingPhone1" min="-2" pref="89" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="lblBillingExt1" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="txtBillingExt2" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="lblBillingEmail" min="-2" pref="46" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="txtBillingExt1" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="lblBillingFax" min="-2" pref="49" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtBillingEmail" max="32767" attributes="0"/>
+                                          <Component id="txtBillingFax" pref="128" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <Component id="txtBillingAlias" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtBillingContact" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtBillingName" alignment="1" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtBillingExt1" min="-2" pref="55" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblBillingFax" min="-2" pref="49" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="txtBillingFax" min="-2" pref="104" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtBillingEmail" min="-2" pref="127" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtBillingCity" pref="211" max="32767" attributes="0"/>
+                                          <Component id="txtBillingStreet" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblBillingPostalCode" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="txtBillingPostalCode" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblBillingProv" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="txtBillingProv" min="-2" pref="55" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtBillingAlias" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtBillingStreet" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtBillingContact" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtBillingCity" min="-2" pref="89" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblBillingProv" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtBillingProv" min="-2" pref="55" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblBillingPostalCode" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtBillingPostalCode" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtBillingName" max="32767" attributes="0"/>
-                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblBillingContract" max="32767" attributes="0"/>
-                          <Component id="lblBillingDept" pref="101" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtBillingDept" pref="185" max="32767" attributes="0"/>
-                          <Component id="txtBillingContract" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="btnDocumentation" min="-2" pref="136" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -285,6 +289,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblBillingStreet" linkSize="9" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="txtBillingStreet" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="lblBillingPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="txtBillingPostalCode" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -292,8 +298,6 @@
                           <Component id="txtBillingCity" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="lblBillingProv" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="txtBillingProv" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="lblBillingPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="txtBillingPostalCode" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -321,6 +325,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblBillingContract" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="txtBillingContract" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="btnDocumentation" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -337,11 +342,9 @@
                                   <Component id="txtBillingExt2" linkSize="10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="lblBillingExt2" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnDocumentation" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -832,7 +835,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="txtPhone2" pref="110" max="32767" attributes="0"/>
@@ -848,7 +851,7 @@
                                       <Component id="txtExt1" min="-2" pref="55" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblFax" min="-2" pref="49" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -866,45 +869,43 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cmbBundles" min="-2" pref="213" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="cmbBundles" pref="213" max="32767" attributes="0"/>
                                           <Component id="txtFax" min="-2" pref="130" max="-2" attributes="0"/>
-                                          <Component id="txtEmail" alignment="0" min="-2" pref="201" max="-2" attributes="0"/>
+                                          <Component id="txtEmail" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtStreet" min="-2" pref="243" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="lblUnit" min="-2" pref="75" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                      <Component id="txtUnit" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="txtCity" min="-2" pref="217" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblProv" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtProv" min="-2" pref="41" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblPostalCode" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtPostalCode" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="txtCustInfo" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="txtCity" min="-2" pref="242" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="lblProv" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                          <Component id="txtProv" min="-2" pref="41" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                          <Component id="lblPostalCode" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtPostalCode" min="-2" pref="68" max="-2" attributes="0"/>
+                                  <Component id="txtContact" alignment="0" min="-2" pref="498" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtCustomer" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtCustInfo" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="txtStreet" min="-2" pref="217" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                                          <Component id="lblUnit" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace pref="50" max="32767" attributes="0"/>
+                                          <Component id="txtUnit" min="-2" pref="83" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtStreetInfo" linkSize="5" alignment="0" min="-2" pref="498" max="-2" attributes="0"/>
-                                          <Component id="txtContact" linkSize="5" alignment="0" min="-2" pref="498" max="-2" attributes="0"/>
-                                          <Component id="txtCustomer" linkSize="5" min="-2" pref="498" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="txtStreetInfo" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -913,40 +914,17 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblName" linkSize="4" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="txtCustomer" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblName" linkSize="4" min="-2" pref="22" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtCustInfo" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNameInfo" linkSize="4" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblNameInfo" linkSize="4" min="-2" pref="22" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblStreet" linkSize="2" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="txtStreet" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblUnit" linkSize="3" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="txtUnit" linkSize="3" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblStreet" linkSize="2" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblStreetInfo" linkSize="1" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="txtStreetInfo" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblStreetInfo" linkSize="1" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCity" linkSize="7" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="lblProv" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="txtProv" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="lblPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="txtPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtContact" linkSize="6" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txtPhone1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="lblExt1" linkSize="8" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
@@ -970,7 +948,7 @@
                                       <Component id="lblAvailBundles" linkSize="8" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="26" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblCity" linkSize="7" min="-2" pref="24" max="-2" attributes="0"/>
@@ -985,6 +963,37 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="txtCustomer" linkSize="4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtCustInfo" linkSize="4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtStreet" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblUnit" linkSize="3" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="txtUnit" linkSize="3" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtStreetInfo" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtCity" linkSize="7" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="lblProv" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="txtProv" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="lblPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="txtPostalCode" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                              <Component id="txtContact" linkSize="6" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1422,11 +1431,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="lblPO" min="-2" pref="94" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="txtPO" min="-2" pref="173" max="-2" attributes="0"/>
-                  <EmptySpace pref="43" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1732,9 +1741,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="pnlPartOfDay" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jCalendar1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -1742,14 +1751,14 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="pnlPartOfDay" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jCalendar1" min="-2" pref="142" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="pnlPartOfDay" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1859,7 +1868,7 @@
                   <Component id="btnCancel" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="341" max="-2" attributes="0"/>
                   <Component id="btnSave" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace pref="445" max="32767" attributes="0"/>
+                  <EmptySpace pref="425" max="32767" attributes="0"/>
                   <Component id="btnNext" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
               </Group>
@@ -1936,11 +1945,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
                   <Component id="btngrpPerService" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   <Component id="btngrpMonthly" min="-2" pref="98" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -59,7 +59,8 @@ public class DateUtils {
     }
     
     public static String Calendar_date(Date my_date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        System.out.println("my_date:" + my_date.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         return sdf.format(my_date);
     }
     public static Object makeObj(final String item)  {

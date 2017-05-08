@@ -73,6 +73,7 @@ public class CreateSRActivities extends JFrame {
     private Object[][] dataValues=new String[3][];
     JTextField textBox=new JTextField();
     myTableModel model;
+    public String ServiceReqNr = null;
     
     public CreateSRActivities() {
         
@@ -125,6 +126,7 @@ public class CreateSRActivities extends JFrame {
                                     collectData = (String) table.getValueAt(selectedRow[i-1], selectedColumns[j]) + ";";
                                 }
                                 else{
+                                    System.out.println("collectData.isNOTEmpty");
                                     collectData = collectData + (String) table.getValueAt(selectedRow[i-1], selectedColumns[j]) + ";";
                                 }
                             }
@@ -244,9 +246,9 @@ public class CreateSRActivities extends JFrame {
                 btnCompleteReqActionPerformed(evt);
             }
         });
-        //System.out.println("finished module");          
+        //System.out.println("finished module");   
+        
     }
-
     public class myTableModel extends DefaultTableModel{
         myTableModel(){
             super(dataValues,columnNames);
@@ -294,41 +296,56 @@ public class CreateSRActivities extends JFrame {
     
     private void btnCompleteReqActionPerformed(java.awt.event.ActionEvent evt) {
         //save all table records in the db
-        //create an array in case is needed for followups
-        String activities[][] = null;
-        
+        //Object[][] activities = null;
+        int rows_count = 0;
         //if(! Unit.isEmpty())        
-        int rows_count = table.getRowCount();
-        //activities = new String[rows_count];
-        String PestsID = "";
-        activities = new String [rows_count][10];
+        rows_count = table.getRowCount();
+        int PestsID = 0;
+        ServiceRequest new_SR = new ServiceRequest();
+        int user_id = new_SR.getuser_id();
+        //activities = new Object [rows_count][10];
+        Integer ActivityNr = 0;
         for(int row = 0; row<rows_count; row++){
-            
-            for(int j=0;j<6;j++){
-                activities[row][j] = ServiceReceipt.ServiceReqNr;
-                Integer ActivityNr = row+1;
-                activities[row][j] = ActivityNr.toString();
-                activities[row][j] = (String)avoid_null(table.getValueAt(row,0));
-                activities[row][j] = (String)avoid_null(table.getValueAt(row, 1));
-                activities[row][j] = (String)avoid_null(table.getValueAt(row, 2));
-                //try{
-                //to change to return the value 
+            if (table.getValueAt(row, 1) != null){
+                //reslove if value is not null - is it empty?
+                ActivityNr = ActivityNr + 1;
+                //String col0 = (String)avoid_null(table.getValueAt(row,0));
+                String col0 = table.getValueAt(row,0).toString();
+                String col1 = table.getValueAt(row,1).toString();
+                String col2 = table.getValueAt(row,2).toString();
+                //String col3 = (String)avoid_null(table.getValueAt(row,3));
                 String return_field = "PestsID"; 
-                String sqlStmt = "Select " + return_field + "from Pests WHERE PestsType = '" + (String)avoid_null(table.getValueAt(row, 3)) + "'";
-                PestsID = SQLConnection.return_value(sqlStmt,return_field);
-                //PestsID = rs.getInt("PestsID");
-                System.out.println("PestsID=" + PestsID);
                 
-                activities[row][j] = PestsID.toString();
-                activities[row][j] = "I";
-                activities[row][j] = DateUtils.now_date_time();
-                activities[row][j] = DateUtils.now_date_time();
-                activities[row][j] = frmLogin.user_id.toString();        
-            }
+                String sqlStmt = "Select " + return_field + " from Pests WHERE PestsType = '" + table.getValueAt(row, 3) + "'";
+                if (table.getValueAt(row, 3)!=null){ PestsID = SQLConnection.return_int_value(sqlStmt,return_field);}
+                System.out.println("PESTSID:"+ PestsID);
+                System.out.println("USERID:" + user_id);
+                System.out.println("ServReqNr:" + new_SR.getServReqNr()+ ActivityNr + col0 + col1+col2+PestsID+new_SR.getuser_id());
+                int userid = new_SR.getuser_id();
+                Activities new_activity = new Activities(ActivityNr,col0,col1,col2,PestsID,"I",DateUtils.now_date_time(),DateUtils.now_date_time(),userid);
+                System.out.println("Activity is:" + new_activity.getID());
+                /*
+                activities[row][0] = ServiceReqNr;
+                ActivityNr = ActivityNr + 1;
+                System.out.println("ActNr:" + ActivityNr);
+                activities[row][1] = ActivityNr.toString();
+                activities[row][2] = (String)avoid_null(table.getValueAt(row,0));
+                activities[row][3] = (String)avoid_null(table.getValueAt(row, 1));
+                activities[row][4] = (String)avoid_null(table.getValueAt(row, 2));
+                String return_field = "PestsID"; 
+                String sqlStmt = "Select " + return_field + " from Pests WHERE PestsType = '" + (String)avoid_null(table.getValueAt(row, 3)) + "'";
+                PestsID = SQLConnection.return_value(sqlStmt,return_field);
+                System.out.println("PestsID=" + PestsID);
+
+                activities[row][5] = PestsID.toString();
+                activities[row][6] = "I";
+                activities[row][7] = DateUtils.now_date_time();
+                activities[row][8] = DateUtils.now_date_time();
+                //activities[row][9] = frmLogin.user_id.toString();        
+                activities[row][9] = user_id;
+                */
         }
-        String Table_Fields = "(ServiceReqNr,ActivityNr,WONr,Unit,Notes,PestsID,ActivityStatus,Creation_Date,Update_Date,User_id)";
-        String stmt_Values = "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        insert_activities();
+        }
         FollowupDlg followup_dlg = new FollowupDlg();
         followup_dlg.init();
         followup_dlg.dispose();
@@ -377,9 +394,16 @@ public class CreateSRActivities extends JFrame {
         JPanel AskPanel = new JPanel();
         JButton BtnCancel = new JButton("Cancel");
         JButton BtnOK = new JButton("OK");
-                
+        int crt_count = 0;
+        int Count = 0;
         private JDialog Dlg = new JDialog((ServiceReceipt) null,"Input",true);
         
+        public int getCount(){
+            return Count;
+        }
+        public void setCount(int crt_count) {
+            Count = crt_count;
+        }
         
         public void init()
         {
@@ -414,25 +438,25 @@ public class CreateSRActivities extends JFrame {
                 //check if value is numeric
                 FollowupCnt = cmbFollowup.getSelectedItem().toString() ;
                 //FollowupCnt.intValue(txtFollowupCount getText());
-                System.out.println("actioned performed followup count = " + FollowupCnt);
+                //System.out.println("actioned performed followup count = " + FollowupCnt);
 
-                int crt_count=1;
-                System.out.println("PastDate outside of loop" + PastDate);
+                crt_count=1;
+                //System.out.println("PastDate outside of loop" + PastDate);
                 do
                     //for(int count=1;count<=Integer.parseInt(FollowupCnt);count++){
                     {    
                     FollowupDatesDlg follow_dates = new FollowupDatesDlg();
                     PastDate=false;
                     follow_dates.init();
-                    System.out.println("PastDate in loop after init " + PastDate);
+                    //System.out.println("PastDate in loop after init " + PastDate);
                     //check if the date was in the future and reset counter if not
                     if(PastDate==true) {
-                        System.out.println("in here??");
+                        //System.out.println("in here??");
                         crt_count=crt_count-1;
                     }
                     crt_count++;
                     follow_dates.dispose();
-                    System.out.println("followup counter is: " + crt_count);
+                    //System.out.println("followup counter is: " + crt_count);
 
                     Dlg.dispose();
                 }
@@ -451,11 +475,18 @@ public class CreateSRActivities extends JFrame {
          }
     }
     
-    public class FollowupDatesDlg  extends JFrame implements ActionListener{
+    public class FollowupDatesDlg extends JFrame implements ActionListener{
+        FollowupDlg new_dlg = new FollowupDlg();
+        int my_val = new_dlg.Count;
+        
+        
+        //System.out.println("date is: " + calFollowup.getCalendar().toString());
+        //System.out.println("count is " + my_val);
+        
         //create a list of numerals and get the numeral according to the number in FollowupCnt
         String[] arr = {"first", "second", "third", "fourth","fifth","sixth","seventh","eighth","ninth","tenth"};
-        
-        JLabel lblQuestion = new JLabel("Please select the date for the " + arr[crt_count] +" follow-up");
+        //System.out.println("count is " + my_val);
+        JLabel lblQuestion = new JLabel("Please select the date for the " + arr[my_val] +" follow-up");
         com.toedter.calendar.JCalendar calFollowup = new com.toedter.calendar.JCalendar();
         
         JPanel AskPanel = new JPanel();
@@ -488,6 +519,8 @@ public class CreateSRActivities extends JFrame {
         }
         public void actionPerformed(ActionEvent e1)
             {
+                String Table_Fields = "";
+                String stmt_Values = "";
                 if(e1.getSource() == BtnOK){
                     //Dlg.setSize(250, 170);
                     //check if value is numeric
@@ -504,8 +537,24 @@ public class CreateSRActivities extends JFrame {
                     }
                     else{
                         PastDate=false;
+                        //we create the servicerequest and fill info in the Service_Request table
+                        Table_Fields = "(CID,BID,BundleName,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,CreationDate,UpdateDate,User_id,ActivityCount)";
+                        stmt_Values = "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        
+                        create_service_request(Table_Fields,stmt_Values);
+                        
+                        ServiceRequest create_SR = new ServiceRequest();
+                        String return_field = "ServiceReqNr"; 
+                        //String sqlStmt = "Select " + return_field + " from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
+                        String sqlStmt = "Select " + return_field + " from Service_Request WHERE UID='" + create_SR.getuser_id() + "' AND ActivityCount = 0";
+                        ServiceReqNr = SQLConnection.return_value(sqlStmt,return_field);
+                        //ServiceRequest new_SR = new ServiceRequest(Integer.getInteger(ServiceReqNr),0,0);
+                        //System.out.println("Service_req is: " + new_SR.ServReqNr);
                         System.out.println("date/time selected is: " + calFollowup.getCalendar().getTime().toString());
                         //System.out.println("date/time now is: "  + Calendar.getInstance());
+                        Table_Fields = "(ServiceReqNr,ActivityNr,WONr,Unit,Notes,PestsID,ActivityStatus,CreationDate,UpdateDate,User_id)";
+                        stmt_Values = "(?,?,?,?,?,?,?,?,?,?)";
+                        insert_activities(Table_Fields,stmt_Values);
                     }
                     //if(todayDate.after(historyDate) && todayDate.before(futureDate)) {
                         // In between
@@ -631,6 +680,50 @@ public class CreateSRActivities extends JFrame {
          }
     }
     
+    public void create_service_request(String Table_Fields, String stmt_Values){
+        String sqlStmt = "";
+        sqlStmt = "INSERT INTO Service_Request " + Table_Fields + " VALUES " + stmt_Values + ";";
+        System.out.println(sqlStmt);
+        try{
+            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
+            
+            
+            ServiceRequest new_service = new ServiceRequest();
+            stmt.setInt(1,new_service.getCustID());
+            stmt.setInt(2,new_service.getBusinessID());
+            stmt.setString(3,new_service.getBundleName());
+            stmt.setString(4,new_service.getPO());
+            stmt.setString(5,new_service.getFreq());
+            stmt.setString(6,new_service.getServiceType());
+            stmt.setString(7,new_service.getPayment());
+            stmt.setString(8,new_service.getDaySched());
+            stmt.setString(9,new_service.getCalendarDate());
+            stmt.setString(10,new_service.getCreationDate());
+            stmt.setString(11,new_service.getUpdateDate());
+            stmt.setInt(12,new_service.getuser_id());
+            stmt.setInt(13,0);
+
+            System.out.println("CustID:" +  new_service.getCustID() 
+                    + ";BusinessID:" + new_service.getBusinessID()
+                    + ";BundleName:" + new_service.getBundleName()
+                    + ";PO:" + new_service.getPO()  + ";Freq:" + new_service.getFreq()
+                    + ";ServiceType:" + new_service.getServiceType()
+                    + ";Payment:" + new_service.getPayment()
+                    + ";DaySched:" + new_service.getDaySched()
+                    + ";Calendar:" + new_service.getCalendarDate()
+                    + ";CreationDate:" + new_service.getCreationDate()
+                    + ";UpdateDate:" + new_service.getUpdateDate()
+                    + ";user_id:" + new_service.getuser_id()
+                    + ";count:0");
+
+            //stmt.executeUpdate();   
+    }
+    catch(Exception e){
+        JOptionPane.showMessageDialog(this,e.getMessage());
+    }
+                    
+    }
+            
     //private Object makeObj(final String item)  {
     //        return new Object() { public String toString() { return item; } };
     //    }
@@ -641,15 +734,34 @@ public class CreateSRActivities extends JFrame {
         return (field_value == null) ? "": field_value;//.toString();
         //return my_string;
     }
-    public void insert_activities(){
+    
+    public void insert_activities(String Table_Fields, String stmt_Values){
+        //Activities new_activity = new Activities();
+        System.out.println("nr of activities" + Activities.numberOfActivities());
         try{
             int rows_count = table.getRowCount();
-            sqlStmt = "INSERT INTO Service_Request_activity_test "
-                                   + "(ServiceReqNr,ActivityNr,WONr,Unit,Notes,PestsID,ActivityStatus,Creation_Date,Update_Date,User_id) "
-                                   + "values (?,?,?,?,?,?,?,?,?,?)";
+            sqlStmt = "INSERT INTO Service_Request_activity " + Table_Fields + " VALUES " + stmt_Values + ";";
             System.out.println(sqlStmt);
             PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
-            
+            //stmt.setInt(1,
+            //stmt.setInt(2,ActivityNr);
+            //stmt.setString(3, WONr);
+            //stmt.setString(4, Unit);
+            //stmt.setString(5, Notes);
+            //String sqlStmt1 = "Select PestsID from Pests WHERE PestsType = '" + PestType + "'";
+            //rs = SQLConnection.getRecordSet(sqlStmt1);
+            //Integer PestsID = rs.getInt("PestsID");
+            //System.out.println("PestsID=" + PestsID);
+            //stmt.setInt(6, PestsID);
+            //stmt.setString(7,"I");//I-Initial,S-Sent,R-Received,C-completed,X-Cancelled
+            //stmt.setString(8,DateUtils.now_date_time());
+            //stmt.setString(9,DateUtils.now_date_time());
+            //stmt.setInt(10,frmLogin.user_id);
+
+            //stmt.addBatch();
+                    
+            //Activities a = new Activities() 
+            /*
             for(int row = 0; row<rows_count; row++)
             {
                 Integer ActivityNr = row+1;
@@ -658,7 +770,7 @@ public class CreateSRActivities extends JFrame {
                 String Unit = (String)table.getValueAt(row, 1);
                 String Notes = (String)table.getValueAt(row, 2);
                 String PestType = (String)table.getValueAt(row, 3);
-                */
+                
                 String WONr = (String)avoid_null(table.getValueAt(row,0));
                 String Unit = (String)avoid_null(table.getValueAt(row, 1));
                 String Notes = (String)avoid_null(table.getValueAt(row,3));
@@ -684,7 +796,7 @@ public class CreateSRActivities extends JFrame {
                     
                     stmt.addBatch();
                 }*/
-            }
+            //}
             //stmt.executeBatch();
             //SQLConnection.conn.commit();
             //Update ActivityCount in ServiceRequest table
@@ -698,3 +810,4 @@ public class CreateSRActivities extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
+

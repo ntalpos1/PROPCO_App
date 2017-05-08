@@ -39,13 +39,34 @@ import javax.swing.KeyStroke;
  */
 //public class ServiceReceipt extends javax.swing.JPanel {
 public class ServiceReceipt extends javax.swing.JFrame {
-
+    String Freq = "Per Service Request";
+    String ServiceType = "In Suit Regular Service Day";
+    String Payment = "Check";
+    String strInput = "";
+    String DaySched = "Anytime";
+    Integer CustID = null;
+    Integer BusinessID = null;
+    Integer DeptID = null;
+    String FollowupCnt = "";
+    public static Object[] Fields_value_arr=null;
+    
+    public static String CustomerType = "";
+    public static String BID = "";
+    
+    Statement stmt ;
+    String sqlStmt = "";
+    String tblName = "";
+    ResultSet rs_count = null;
+    ResultSet rs = null;
+    
     
     /**
      * Creates new form ServiceReceipt
      */
     public ServiceReceipt() {
         System.out.println("===ServiceReceipt===");
+        Fields_value_arr = new String[13];
+        
         initComponents();
         //correct tab key functionality
         allow_vk_tab();
@@ -445,70 +466,70 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlBillingCustomerLayout.setHorizontalGroup(
             pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingAlias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingStreet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingCity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingContact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingPhone1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingPhone2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addComponent(txtBillingPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblBillingExt2))
-                            .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addComponent(txtBillingPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblBillingExt1)))
+                            .addComponent(lblBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingDept, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(txtBillingDept, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDocumentation, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                        .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingAlias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingStreet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingCity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingContact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingPhone1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblBillingPhone2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addComponent(txtBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(txtBillingPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblBillingExt2))
+                                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(txtBillingPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(lblBillingExt1)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(txtBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(txtBillingExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblBillingFax, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(2, 2, 2)
+                                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtBillingEmail)
+                                    .addComponent(txtBillingFax, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                            .addComponent(txtBillingAlias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtBillingContact)
+                            .addComponent(txtBillingName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addComponent(txtBillingExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblBillingFax, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBillingFax, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtBillingAlias, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtBillingStreet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtBillingContact, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBillingCustomerLayout.createSequentialGroup()
-                            .addComponent(txtBillingCity, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lblBillingProv)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtBillingProv, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblBillingPostalCode)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txtBillingName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
-                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBillingDept, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBillingDept, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(txtBillingContract, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(48, 48, 48)
-                .addComponent(btnDocumentation, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtBillingCity, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                                    .addComponent(txtBillingStreet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(lblBillingPostalCode)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
+                                        .addComponent(lblBillingProv)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtBillingProv, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         pnlBillingCustomerLayout.setVerticalGroup(
             pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,15 +544,15 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBillingStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBillingStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBillingStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBillingCity, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBillingCity, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblBillingProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBillingProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBillingPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBillingProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBillingContact, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -553,7 +574,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtBillingContract, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDocumentation)))
                     .addGroup(pnlBillingCustomerLayout.createSequentialGroup()
                         .addGroup(pnlBillingCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBillingExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -565,10 +587,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addComponent(txtBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblBillingEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDocumentation)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblBillingExt2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         pnlBillingCustomerLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblBillingAlias, lblBillingCity, lblBillingContact, lblBillingName, lblBillingPhone1, lblBillingPhone2, lblBillingStreet});
@@ -822,7 +842,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblFax, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(pnlCustomerLayout.createSequentialGroup()
                                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlCustomerLayout.createSequentialGroup()
@@ -836,72 +856,50 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(lblAvailBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmbBundles, 0, 213, Short.MAX_VALUE)
                                     .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))
+                                    .addComponent(txtEmail))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
-                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlCustomerLayout.createSequentialGroup()
-                                .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCustInfo)
-                            .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(pnlCustomerLayout.createSequentialGroup()
-                                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblProv)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(6, 6, 6)
-                                    .addComponent(lblPostalCode)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(3, 3, 3))))
+                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCustomerLayout.createSequentialGroup()
+                                .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProv)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPostalCode)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPostalCode))
+                            .addComponent(txtContact, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtCustomer, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCustInfo, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCustomerLayout.createSequentialGroup()
+                                    .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(71, 71, 71)
+                                    .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                    .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtStreetInfo, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-
-        pnlCustomerLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtContact, txtCustomer, txtStreetInfo});
-
         pnlCustomerLayout.setVerticalGroup(
             pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCustomerLayout.createSequentialGroup()
-                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCustInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNameInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblNameInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
-                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(60, 60, 60)
                         .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -921,7 +919,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(cmbBundles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblAvailBundles, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(26, Short.MAX_VALUE))
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
                         .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -933,6 +931,31 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblBundled, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(pnlCustomerLayout.createSequentialGroup()
+                .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCustInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtStreetInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCustomerLayout.createSequentialGroup()
+                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtProv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))
+                    .addGroup(pnlCustomerLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(txtContact, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pnlCustomerLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblStreetInfo, txtStreetInfo});
@@ -957,17 +980,17 @@ public class ServiceReceipt extends javax.swing.JFrame {
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                .addComponent(pnlCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
         );
         pnlInfoLayout.setVerticalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE))
+                    .addComponent(pnlBillingCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
                 .addGap(0, 4, Short.MAX_VALUE))
         );
 
@@ -989,11 +1012,11 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlDetailsLayout.setHorizontalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPO, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(txtPO, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1248,21 +1271,21 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlScheduleLayout.setHorizontalGroup(
             pnlScheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlScheduleLayout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(26, 26, 26)
                 .addComponent(pnlPartOfDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlScheduleLayout.setVerticalGroup(
             pnlScheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlScheduleLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlPartOfDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
             .addGroup(pnlScheduleLayout.createSequentialGroup()
                 .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnlScheduleLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(pnlPartOfDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlActions.setEnabled(false);
@@ -1305,7 +1328,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(341, 341, 341)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 445, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 425, Short.MAX_VALUE)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
@@ -1345,11 +1368,10 @@ public class ServiceReceipt extends javax.swing.JFrame {
         pnlFreqLayout.setHorizontalGroup(
             pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFreqLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(btngrpPerService)
                 .addGap(53, 53, 53)
-                .addComponent(btngrpMonthly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btngrpMonthly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlFreqLayout.setVerticalGroup(
             pnlFreqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1368,27 +1390,28 @@ public class ServiceReceipt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addContainerGap()
+                                .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnlPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                                .addGap(8, 8, 8))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 1168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1400,38 +1423,19 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                    .addComponent(pnlFreq, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlFreq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlService, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(pnlSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlActions, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
-    String Freq = "Per Service Request";
-    String ServiceType = "In Suit Regular Service Day";
-    String Payment = "Check";
-    String strInput = "";
-    String DaySched = "Anytime";
-    Integer CustID = null;
-    Integer BusinessID = null;
-    Integer DeptID = null;
-    public static String ServiceReqNr = null;
-    String FollowupCnt = "";
-    String[] Fields_value_arr=null;
     
-    public static String CustomerType = "";
-    public static String BID = "";
-    
-    Statement stmt ;
-    String sqlStmt = "";
-    String tblName = "";
-    ResultSet rs_count = null;
-    ResultSet rs = null;
             
     private void grpFreq( ) {
         ButtonGroup bgFreq = new ButtonGroup( );
@@ -1486,22 +1490,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
         for (Component cp : pnlSchedule.getComponents() ){
             cp.setEnabled(false);
         }
-        //pnlBillingCustomer.setEnabled(false);
-        //pnlCustomer.setEnabled(false);
-        
         btnSave.setEnabled(false);
         btnNext.setEnabled(false);
         txtCustomer.setEnabled(true);
-        /*
-        lblBundled.setVisible(false);
-        cbBundle.setVisible(false);
-        lblAvailBundles.setVisible(false);
-        cmbBundles.setVisible(false);
-        */
     }
    
     private void btngrpPerServiceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngrpPerServiceMousePressed
-        // TODO add your handling code here:
         if (btngrpPerService.isSelected()){
             Freq = btngrpPerService.getText();
             System.out.println("Freq:" + Freq);
@@ -1509,14 +1503,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_btngrpPerServiceMousePressed
 
     private void btngrpMonthlyMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngrpMonthlyMousePressed
-        // TODO add your handling code here:
         if (btngrpMonthly.isSelected()){
             Freq = btngrpMonthly.getText();
         }
     }//GEN-LAST:event_btngrpMonthlyMousePressed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
         MainMenu regFace = new MainMenu();
 	regFace.setSize(700,800);
 	regFace.setLocationRelativeTo(null);
@@ -1676,11 +1668,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
                         }
                         
                         //get user_id
-                        String return_field = "User_ID"; 
-                        String sqlStmt = "Select " + return_field + " from Users where user_name = '" + frmLogin.user_name + "'";
-                        Integer user_id = Integer.getInteger(SQLConnection.return_value(sqlStmt,return_field));
+                        //String return_field = "User_ID"; 
+                        //String sqlStmt = "Select " + return_field + " from Users where user_name = '" + frmLogin.user_name + "'";
+                        //String sqlStmt = "Select " + return_field + " from Users where user_name = '" + user_name + "'";
+                        //Integer user_id = Integer.getInteger(SQLConnection.return_value(sqlStmt,return_field));
                         //rs = SQLConnection.getRecordSet(sqlStmt);
-                        
+                        ServiceRequest new_cust = new ServiceRequest();
                         //Integer user_id = rs.getInt("User_ID");
                         sqlStmt = "UPDATE Customer SET CustomerName = '" + txtCustomer.getText() + "'," 
                                 + " Notes = '" + txtCustInfo.getText() + "',"
@@ -1697,15 +1690,22 @@ public class ServiceReceipt extends javax.swing.JFrame {
                                 + " Other = '',"
                                 + " Fax = '" + txtFax.getText() + "',"
                                 + " EmailAddress = '" + txtEmail.getText() + "',"
-                                + " Bundle = '" + bundle + "',"
+                                + " BundleName = '" + bundle + "',"
+                                + " DepartmentName = '" + txtBillingDept.getText() + "',"
+                                + " ContractNr = '" + txtBillingContract.getText() + "',"
                                 + " UpdateDate = '" + DateUtils.now_date_time() + "',"
-                                + " UserID = '" + user_id + "'"
+                                + " UID = '" + new_cust.getuser_id() + "'"
+                                + " where CID = '" + new_cust.getCustID() + "'";
                                 //+ " UserID = '(SELECT User_ID from Users where user_name = '" + frmLogin.user_name + "')'"
-                                + " where cust_id = '" + CustID + "'";
+                                //+ " where cust_id = '" + CustID + "'";
 
                         System.out.println(sqlStmt);
                         int updateCust = SQLConnection.updateRecordSet(sqlStmt);
-                        
+                        //reload Customer class
+                        int user_id = new_cust.getuser_id();
+                        int custID = new_cust.getCustID();
+                        Customer upd_Cust = new Customer(user_id,txtCustomer.getText(),txtCustInfo.getText(),txtStreet.getText(),txtStreetInfo.getText(), txtCity.getText(), txtProv.getText(), txtPostalCode.getText(), txtContact.getText(),txtPhone1.getText(),txtExt1.getText(),txtPhone2.getText(),txtExt2.getText(),txtFax.getText(),txtEmail.getText(),bundle, txtBillingDept.getText(),txtBillingContract.getText(),custID);
+                        System.out.println("test" + upd_Cust.CustID);
                         //update Billing info
                         if (BusinessID > 0) {
                             //need to add new bundle if it was updated
@@ -1730,10 +1730,17 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             sqlStmt = "UPDATE Business_Details SET Name = '" + txtBillingName.getText() + "'," 
                                     + " Alias = '" + txtBillingAlias.getText() + "',"
                                     + " Address = '" + txtBillingStreet.getText() + "',"
-                                    + " Notes = 'test',"
                                     + " City = '" + txtBillingCity.getText() + "',"
                                     + " Province = '" + txtBillingProv.getText() + "',"
-                                    + " PostalCode = '" + txtBillingPostalCode.getText() + "'"
+                                    + " PostalCode = '" + txtBillingPostalCode.getText() + "',"
+                                    + " ContactName = '" +txtBillingContact.getText() + "',"
+                                    + " PrimaryPhone = '" +txtBillingPhone1.getText() + "',"
+                                    + " Ext = '" + txtBillingExt1.getText() + "',"
+                                    + " SecondaryPhone = '" +txtBillingPhone2.getText() + "',"
+                                    + " Ext2 = '" + txtBillingExt2.getText() + "',"
+                                    + " Fax ='" + txtBillingFax.getText() + "',"
+                                    + " EmailAddress = '" + txtBillingEmail.getText() + "',"
+                                    + " UpdateDate = '" + DateUtils.now_date_time() + "'"
                                     + " where BID = '" + BusinessID + "'";
 
                             System.out.println(sqlStmt);
@@ -1760,41 +1767,37 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }
     
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        //System.out.println("window activated");         
     }//GEN-LAST:event_formWindowActivated
 
     private void txtCustomerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerKeyPressed
-        // TODO add your handling code here:
         String strInput= this.txtCustomer.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)  {
             if (CustomerType == "Existing"){
                 //Statement stmt = null;
-                System.out.println("key pressed 1");
                 try {
-                    System.out.println("conn success");
-                    System.out.println("stmt ok " + strInput);
+                    //System.out.println("conn success");
                     String sqlStmt = "select count(*) as num from Customer where CustomerName like '%" + strInput + "%'";
                     //String tblName = "Customer";
                     //rs = stmt.executeQuery(sqlStmt);
                     rs = SQLConnection.getRecordSet(sqlStmt);
-                    System.out.println("stmt ok");
-                    System.out.println("resultset " + sqlStmt);
+                    //System.out.println("resultset " + sqlStmt);
                     //rs.next();
                     switch (rs.getInt("num")){
                         case 0:
                             JOptionPane.showMessageDialog(null,"There is no customer which have the Name containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
                             break;
                         case 1:
-                            sqlStmt = "select * from Customer where CustomerName like '%" + strInput + "%'";
+                            sqlStmt = "select CID,CustomerName,Notes,Address,AddressNotes,City,Province,PostalCode,ContactName,PrimaryPhone,Ext,SecondaryPhone,Ext2,Fax,EmailAddress,BID,BundleName,DepartmentName,ContractNr,UID from Customer where CustomerName like '%" + strInput + "%'";
                             //tblName = "Customer";
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             //rs.next();
                             fillInfo(rs);
+                            
                             btnNext.setEnabled(true);
                             btnSave.setEnabled(true);
                             break;
                         default:
-                            System.out.println("multiple records");
+                            //System.out.println("multiple records");
                             sqlStmt = "select CustomerName, Address from Customer where CustomerName like '%" + strInput + "%'";
                             //String tblName = "Customer";
                             rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
@@ -1822,16 +1825,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
                     }
                     pnlCustomer.setEnabled(true);
                     txtBillingName.setEnabled(true);
-
-                    /*
-                    txtCustInfo.setEnabled(true);
-                    txtStreet.setEnabled(true);
-                    txtUnit.setEnabled(true);
-                    txtStreetInfo.setEnabled(true);
-                    txtCity.setEnabled(true);
-                    txtProv.setEnabled(true);
-                    txtPostalCode.setEnabled(true);
-                    */
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Customer Name is less than 5 characters","Customer Name too short!!!",JOptionPane.ERROR_MESSAGE);
@@ -1850,7 +1843,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 
                 //System.out.println("key pressed 1");
                 try {
-                    //System.out.println("stmt ok");
                     sqlStmt = "select count(*) as num from Customer where Address like '%" + strInput + "%'";
                     //tblName = "Customer";
                     rs = SQLConnection.getRecordSet(sqlStmt);
@@ -1861,7 +1853,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null,"There is no customer which have the street containing '" + strInput + "'","",JOptionPane.ERROR_MESSAGE);
                             break;
                         case 1:
-                            sqlStmt = "select * from Customer where Address like '%" + strInput + "%'";
+                            sqlStmt = "select CID,CustomerName,Notes,Address,AddressNotes,City,Province,PostalCode,ContactName,PrimaryPhone,Ext,SecondaryPhone,Ext2,Fax,EmailAddress,BID,BundleName,DepartmentName,ContractNr,UID from Customer where Address like '%" + strInput + "%'";
                             rs = SQLConnection.getRecordSet(sqlStmt);
                             //rs.next();
                             fillInfo(rs);
@@ -1921,38 +1913,8 @@ public class ServiceReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        //we create the servicerequest and fill info in the Service_Request table
-        String Table_Fields = "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount)";
-        String stmt_Values = "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        
-        Fields_value_arr = new String[13];
-        Fields_value_arr[0] = CustID.toString();
-        Fields_value_arr[1] = BusinessID.toString();
-        DeptID = 0;
-        if (!txtBillingDept.getText().isEmpty()){
-            System.out.println("DeptID=" + DeptID);
-            String return_field = "DeptID"; 
-            String sqlStmt = "Select " + return_field + " from Department WHERE DeptName = '" + txtBillingDept.getText() + "'";
-            DeptID = Integer.getInteger(SQLConnection.return_value(sqlStmt,return_field));
-            System.out.println("DeptID=" + DeptID);
-        }
-        Fields_value_arr[2] = DeptID.toString();
-        Fields_value_arr[3] = avoid_null(txtPO.getText()).toString();       
-        Fields_value_arr[4] = Freq;
-        Fields_value_arr[5] = ServiceType;
-        Fields_value_arr[6] = Payment;
-        Fields_value_arr[7] = DaySched;
-        Fields_value_arr[8] = DateUtils.Calendar_date(jCalendar1.getDate());
-        Fields_value_arr[9] = DateUtils.now_date_time();
-        Fields_value_arr[10] = DateUtils.now_date_time();
-        Fields_value_arr[11] = frmLogin.user_id.toString();
-        Fields_value_arr[12] = "0";
-        
-        create_service_request(Table_Fields,stmt_Values, Fields_value_arr);
-        String return_field = "ServiceReqNr"; 
-        String sqlStmt = "Select " + return_field + " from Service_Request WHERE User_id='" + frmLogin.user_id + "' AND ActivityCount = 0";
-        ServiceReqNr = SQLConnection.return_value(sqlStmt,return_field);
-        
+                
+        System.out.println("Date is:" +jCalendar1.getDate().toString());
         CreateSRActivities SRActivities = new CreateSRActivities();
         SRActivities.setSize(800,600);
         SRActivities.setLocationRelativeTo(null);
@@ -1965,10 +1927,6 @@ public class ServiceReceipt extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnNextActionPerformed
-
-    private void jCalendar1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseReleased
-        //txtDate.setText(jCalendar1.getCalendar().getTime().toString());
-    }//GEN-LAST:event_jCalendar1MouseReleased
 
     private void btnDocumentationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentationActionPerformed
         Documentation frmDocumentation = new Documentation();
@@ -2078,7 +2036,11 @@ public class ServiceReceipt extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtBillingPhone1KeyPressed
-/*  */  
+
+    private void jCalendar1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar1MouseReleased
+        btnNext.setEnabled(true);
+    }//GEN-LAST:event_jCalendar1MouseReleased
+  
     public class MultipleRecords extends JFrame implements ActionListener{
         JLabel Lbl = new JLabel("These customers match the search criteria. Please select one:");
         JPanel AskPanel = new JPanel();
@@ -2094,7 +2056,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             DlgCntnr.add(CustList);
             //fill CustList with the records
             try {
-                System.out.println("MultipleRecords " + sqlStmt);
+                //System.out.println("MultipleRecords " + sqlStmt);
                 while (rs.next()){
                     CustList.addItem(makeObj(rs.getString("CustomerName") + " at " + rs.getString("Address")));
                 }
@@ -2130,7 +2092,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
                 //System.out.println("actioned " + tokens[0]);
                 //System.out.println("another " + tokens[1]);
                 
-                sqlStmt = "select * from Customer where Address = '" + tokens[1] + "' and CustomerName = '" + tokens[0] + "'";
+                sqlStmt = "select CID,CustomerName,Notes,Address,AddressNotes,City,Province,PostalCode,ContactName,PrimaryPhone,Ext,SecondaryPhone,Ext2,Fax,EmailAddress,BID,BundleName,DepartmentName,ContractNr,UID from Customer where Address = '" + tokens[1] + "' and CustomerName = '" + tokens[0] + "'";
                 rs = SQLConnection.getRecordSet(sqlStmt);
                 fillInfo(rs);
                 Dlg.dispose();
@@ -2140,69 +2102,119 @@ public class ServiceReceipt extends javax.swing.JFrame {
     
     public void fillInfo(ResultSet rs){
         System.out.println("fillInfo");
-        String strBundleValue = null;
-        try {
-            CustID = rs.getInt("cust_id");
-            txtCustomer.setText(rs.getString("CustomerName"));
-            String Notes = rs.getString("Notes");
-            txtStreet.setText(rs.getString("Address"));
-            String AddressNotes = rs.getString("AddressNotes");
-            txtCity.setText(rs.getString("City"));
-            txtProv.setText(rs.getString("Province"));
-            txtPostalCode.setText(rs.getString("PostalCode"));
-            txtContact.setText(rs.getString("ContactName"));
-            txtPhone1.setText(rs.getString("PrimaryPhone"));
-            txtExt1.setText(rs.getString("Ext"));
-            txtPhone2.setText(rs.getString("SecondaryPhone"));
-            txtExt2.setText(rs.getString("Ext2"));
-            txtFax.setText(rs.getString("Fax"));
-            txtEmail.setText(rs.getString("EmailAddress"));
-            cbBundle.setSelected(false);
-            System.out.println("bundle value:" + rs.getString("Bundle") + "");
-            if ( rs.getString("Bundle").length() >0){
-                System.out.println("bundle value non-empty: " + rs.getString("Bundle"));
-                cbBundle.setSelected(true);
-                //cbBundle.setEnabled(true);
-                strBundleValue = rs.getString("Bundle");
-            }
-            
+        Customer this_cust = new Customer(rs);
+        txtCustomer.setText(this_cust.CustName);
+        txtCustInfo.setText(this_cust.Notes);
+        txtStreet.setText(this_cust.Address);
+        txtStreetInfo.setText(this_cust.AddressNotes);
+        txtCity.setText(this_cust.City);
+        txtProv.setText(this_cust.Province);
+        txtPostalCode.setText(this_cust.PostalCode);
+        txtContact.setText(this_cust.ContactName);
+        txtPhone1.setText(this_cust.Phone1);
+        txtExt1.setText(this_cust.Ext);
+        txtPhone2.setText(this_cust.Phone2);
+        txtExt2.setText(this_cust.Ext2);
+        txtFax.setText(this_cust.Fax);
+        txtEmail.setText(this_cust.Email);
+        cbBundle.setSelected(this_cust.Bundle);
+        txtBillingDept.setText(this_cust.Department);
+        txtBillingContract.setText(this_cust.ContractNr);
+        
+        System.out.println(""+this_cust.CustID);
+        try{        
             if (rs.getInt("BID") != 0){
+                
                 BusinessID = rs.getInt("BID");
-                BID = BusinessID.toString();
-                sqlStmt = "select * from Business_Details where BID = '" + BusinessID + "'";
+                //BID = BusinessID.toString();
+                sqlStmt = "select BID,Name,Alias,Address,City,Province,PostalCode,ContactName,PrimaryPhone,Ext,SecondaryPhone,Ext2,Fax,EmailAddress from Business_Details where BID = '" + BusinessID + "';";
                 //tblName = "Business_Details";
                 rs = SQLConnection.getRecordSet(sqlStmt);
-                //rs.next();
-                txtBillingName.setText(rs.getString("Name"));
-                txtBillingAlias.setText(rs.getString("Alias"));
-                txtBillingStreet.setText(rs.getString("Address"));
-                //txtBilling???.setText(rs.getString("Notes"));
-                txtBillingCity.setText(rs.getString("City"));
-                txtBillingProv.setText(rs.getString("Province"));
-                txtBillingPostalCode.setText(rs.getString("PostalCode"));
-                //txtBillingAlias.setText(rs.getString("Alias"));
+                BillingName this_business = new BillingName(rs);
+                txtBillingName.setText(this_business.BillingName);
+                txtBillingAlias.setText(this_business.Alias);
+                txtBillingStreet.setText(this_business.Address);
+                txtBillingCity.setText(this_business.City);
+                txtBillingProv.setText(this_business.Province);
+                txtBillingPostalCode.setText(this_business.PostalCode);
+                txtBillingContact.setText(this_business.ContactName);
+                txtBillingPhone1.setText(this_business.Phone1);
+                txtBillingExt1.setText(this_business.Ext);
+                txtBillingPhone2.setText(this_business.Phone2);
+                txtBillingExt2.setText(this_business.Ext2);
+                txtBillingFax.setText(this_business.Fax);
+                txtBillingEmail.setText(this_business.Email);
+                //DeptID = 0;
+                //if (this_cust.Department != "" && !this_cust.Department.isEmpty()){
+                //    sqlStmt = "select DID from Department where DeptName = '" + this_cust.Department + "';";
+                //    DeptID = SQLConnection.getRecordSet(sqlStmt).getInt("DID");
+                //}
+                System.out.println("loading SR:" + "0," +this_cust.CustID +"," +BusinessID+","+this_cust.BundleName+"," +avoid_null(txtPO.getText()).toString()+ ","+Freq+"," +ServiceType+","+Payment+","+DaySched+","+jCalendar1.getDate().toString()) ; 
+                ServiceRequest new_SR = new ServiceRequest(this_cust.CustID,BusinessID,this_cust.BundleName,avoid_null(txtPO.getText()).toString(),Freq,ServiceType,Payment,DaySched,jCalendar1.getDate().toString(),"","",0) ;
+                //remove items from the Department list and Contract #
+                //cmbDepartmentName.removeAllItems();
+                //cmbContractNr.removeAllItems();
+                //cmbDepartmentName.setEditable(true);
+                //cmbContractNr.setEditable(true);
+                
+                //sqlStmt = "select DepartmentName,ContractNr from Department where BID = '" + this_business.BusinessID + "'";
+                //tblName = "Department";
+                //rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
+                //while (rs.next()){
+                    //get available bundles
+                //    cmbDepartmentName.addItem((String) (rs.getString("DepartmentName")));               
+                //    cmbContractNr.addItem((String) (rs.getString("ContractNr")));               
+                //}
+                //cmbDepartment.setSelectedItem(this_cust.DepartmentName);
+                //cmbContractNr.setSelectedItem(this_cust.ContractNr);
+                
                 //remove items from the cmbBundles list
                 cmbBundles.removeAllItems();
                 cmbBundles.setEditable(true);
-                sqlStmt = "select BundleName from Bundles where BID = '" + BusinessID + "'";
+                sqlStmt = "select BundleName from Bundles where BID = '" + this_business.BusinessID + "'";
                 //tblName = "Business_Details";
                 rs = SQLConnection.getMultipleRecordsRS(sqlStmt);
                 while (rs.next()){
                     //get available bundles
                     cmbBundles.addItem((String) (rs.getString("BundleName")));               
                 }
-                cmbBundles.setSelectedItem(strBundleValue);  
+                cmbBundles.setSelectedItem(this_cust.BundleName);  
             }
             else{
+                BillingName this_business = new BillingName();
+                txtBillingName.setText(this_business.BillingName);
+                txtBillingAlias.setText(this_business.Alias);
+                txtBillingStreet.setText(this_business.Address);
+                txtBillingCity.setText(this_business.City);
+                txtBillingProv.setText(this_business.Province);
+                txtBillingPostalCode.setText(this_business.PostalCode);
+                txtBillingContact.setText(this_business.ContactName);
+                txtBillingPhone1.setText(this_business.Phone1);
+                txtBillingExt1.setText(this_business.Ext);
+                txtBillingPhone2.setText(this_business.Phone2);
+                txtBillingExt2.setText(this_business.Ext2);
+                txtBillingFax.setText(this_business.Fax);
+                txtBillingEmail.setText(this_business.Email);
+                txtBillingDept.setText("'");
+                txtBillingContract.setText("");
+                /*
                 txtBillingName.setText("");
                 txtBillingAlias.setText("");
                 txtBillingStreet.setText("");
-                //txtBilling???.setText("");
                 txtBillingCity.setText("");
                 txtBillingProv.setText("");
                 txtBillingPostalCode.setText("");
+                txtBillingContact.setText("");
+                txtBillingPhone1.setText("");
+                txtBillingExt1.setText("");
+                txtBillingPhone2.setText("");
+                txtBillingExt2.setText("");
+                txtBillingFax.setText("");
+                txtBillingEmail.setText("");
+                txtBillingDept.setText("");
+                txtBillingContract.setText("");*/
             }
-        }
+        }    
          catch (SQLException ex) {
             Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
             //if (stmt != null) { stmt.close(); }
@@ -2211,57 +2223,12 @@ public class ServiceReceipt extends javax.swing.JFrame {
         
     }
     
-    public String create_service_request(String Table_Fields, String stmt_Values, String[] Fields_Value_arr){
-                
-        
-        
-        try{
-            sqlStmt = "INSERT INTO Service_Request " + Table_Fields + " VALUES " + stmt_Values + ";";
-            //sqlStmt = "INSERT INTO Service_Request "
-            //                       + "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
-            //                       + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            System.out.println(sqlStmt);
-            PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
-            stmt.setInt(1, Integer.parseInt(Fields_Value_arr[0]));
-            stmt.setInt(2, Integer.parseInt(Fields_Value_arr[1]));
-            stmt.setInt(3, Integer.parseInt(Fields_Value_arr[2]));
-            stmt.setString(4, Fields_Value_arr[3]);
-            stmt.setString(5, Fields_Value_arr[4]);
-            stmt.setString(6, Fields_Value_arr[5]);
-            stmt.setString(7, Fields_Value_arr[6]);
-            stmt.setString(8, Fields_Value_arr[7]);
-            stmt.setString(9, Fields_Value_arr[8]);
-            stmt.setString(10, Fields_Value_arr[9]);
-            stmt.setString(11, Fields_Value_arr[10]);
-            stmt.setInt(12, Integer.parseInt(Fields_Value_arr[11]));
-            stmt.setInt(13, Integer.parseInt(Fields_Value_arr[12]));
-            
-            System.out.println("CustID:" +  Integer.parseInt(Fields_Value_arr[0]) 
-                    + ";BusinessID:" + Integer.parseInt(Fields_Value_arr[1])
-                    + ";DeptID:" + Integer.parseInt(Fields_Value_arr[2])
-                    + ";PO:" + Fields_Value_arr[3]  + ";Freq:" + Fields_Value_arr[4]
-                    + ";ServiceType:" + Fields_Value_arr[5] 
-                    + ";Payment:" + Fields_Value_arr[6] 
-                    + ";DaySched:" + Fields_Value_arr[7] 
-                    + ";Calendar:" + Fields_Value_arr[8]
-                    + ";Creation_date:" + Fields_Value_arr[9] 
-                    + ";Update_date:" + Fields_Value_arr[10] 
-                    + ";user_id:" + Integer.parseInt(Fields_Value_arr[11])
-                    + ";count:" +Integer.parseInt(Fields_Value_arr[12]));
-            
-            stmt.executeUpdate();   
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this,e.getMessage());
-        }
-        return ServiceReqNr;
-    }
     /*
     public void create_service_request(){
         try{
             
             sqlStmt = "INSERT INTO Service_Request "
-                                   + "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,Creation_Date,Update_Date,User_id,ActivityCount) "
+                                   + "(Cust_id,BID,DeptID,PONr,Invoicing,ServiceType,PaymentType,Schedule,ServiceDate,CreationDate,UpdateDate,User_id,ActivityCount) "
                                    + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             System.out.println(sqlStmt);
             PreparedStatement stmt = SQLConnection.conn.prepareStatement(sqlStmt);
@@ -2292,7 +2259,7 @@ public class ServiceReceipt extends javax.swing.JFrame {
             stmt.setInt(13,0);
             System.out.println("CustID:" + CustID + ";BusinessID:" + BusinessID + ";DeptID:" + DeptID + ";PO:" + txtPO.getText().toString() + ";Freq:" 
                     + Freq + ";ServiceType:" + ServiceType + ";Payment:" + Payment + ";DaySched:" + DaySched + ";Calendar:" 
-                    + DateUtils.Calendar_date(jCalendar1.getDate()) + ";Creation_date:" + DateUtils.now_date_time() + ";Update_date:" + DateUtils.now_date_time() 
+                    + DateUtils.Calendar_date(jCalendar1.getDate()) + ";CreationDate:" + DateUtils.now_date_time() + ";UpdateDate:" + DateUtils.now_date_time() 
                     + ";user_id:" + frmLogin.user_id);
             
             stmt.executeUpdate();   

@@ -2,9 +2,7 @@
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,8 +22,9 @@ public class frmLogin extends javax.swing.JFrame {
 
 
     //public static List<ArrayList<String>> my_array;
-    public static String user_name;
-    public static Integer user_id;
+    //public static String user_name;
+    //public static Integer user_id;
+    Integer user_id;
    
     /**
      * Creates new form PROPCO_UI
@@ -170,18 +169,21 @@ public class frmLogin extends javax.swing.JFrame {
         
         String puname = txtUser.getText();
         char[] ppaswd = txtPassword.getPassword();
+        //initialize the ServiceRequest class
+        ServiceRequest init = new ServiceRequest();
 
-        user_name = puname;
+        //user_name = puname;
         
-        String sqlStmt = "select user_id,user_name,password,full_privilege,Service_Receipt,Assign_Service_Tech,Pending_WO,Review_SR,Invoices,Reports from Users where user_name = '" + puname + "'";
+        String sqlStmt = "select UID,user_name,password,full_privilege,Service_Receipt,Assign_Service_Tech,Pending_WO,Review_SR,Invoices,Reports from Users where user_name = '" + puname + "'";
         try {
             rs = SQLConnection.getRecordSet(sqlStmt);
-            user_id = rs.getInt("user_id");
+            user_id = rs.getInt("UID");
             txtUser.setText(rs.getString("user_name"));
             txtPassword.setText(rs.getString("password"));
             char [] dbpassArray = rs.getString("password").toCharArray();
             if(puname.equals(rs.getString("user_name"))){
                 if(Arrays.equals(dbpassArray,ppaswd)){
+                    ServiceRequest add_user_id = new ServiceRequest(user_id);
                     MainMenu regFace = new MainMenu();
                     regFace.setSize(700,800);
                     regFace.setLocationRelativeTo(null);

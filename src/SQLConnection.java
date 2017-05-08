@@ -63,7 +63,22 @@ public class SQLConnection {
             }
         return my_value;
     }
-    
+    public static int return_int_value(String sqlStmt,String return_field){
+    System.out.println("getRecordSet " + sqlStmt);
+        ResultSet rs = null;
+        int my_value=0;
+        try {
+            rs = stmt.executeQuery(sqlStmt);
+            rs.next();
+            my_value = rs.getInt(return_field);
+        }
+        catch(SQLException ex) {
+            Logger.getLogger(ServiceReceipt.class.getName()).log(Level.SEVERE, null, ex);
+            //if (stmt != null) { stmt.close(); }
+            System.out.println("error");      
+            }
+        return my_value;
+    }
     public static ResultSet getMultipleRecordsRS(String sqlStmt){
         System.out.println("getMultipleRecordsRS " + sqlStmt);
         ResultSet rs = null;
